@@ -1,0 +1,50 @@
+/* UserCard.module.css */
+
+.userCard {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userName {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.actionButtons {
+    flex-grow: 1;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.addButton {
+    background-color: #0073e6;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.removeButton {
+    background-color: #e64747;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+}

@@ -1,0 +1,66 @@
+/* FriendsPage.module.css */
+
+.friendsPage {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    min-width: 600px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    background-color: transparent;
+    color: #333;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+
+.tabs button:hover {
+    border-color: #0073e6;
+}
+
+.tabs button.active {
+    border-color: #0073e6;
+}
+
+.friendCount {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.friendList {
+    list-style: none;
+    padding: 0;
+    margin-left: 0;
+
+}
+
+.friendItem {
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Добавь другие стили согласно своим требованиям */

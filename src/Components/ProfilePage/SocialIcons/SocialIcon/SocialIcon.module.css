@@ -1,0 +1,36 @@
+/* SocialIcon.module.css */
+.iconContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button {
+    width: 30px; /* или любой другой размер, соответствующий вашим требованиям */
+    height: 30px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+}
+
+.input {
+    position: absolute;
+    margin-top: 40px;
+    width: 340px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+.input:focus {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

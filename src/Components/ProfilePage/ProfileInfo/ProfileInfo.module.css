@@ -1,0 +1,29 @@
+.container_info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.container_profileContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.userInfo {
+    margin: 0 auto;
+}
+
+.username {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.email {
+    color: #666;
+}

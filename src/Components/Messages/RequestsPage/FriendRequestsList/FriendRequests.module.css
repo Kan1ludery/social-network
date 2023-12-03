@@ -1,0 +1,39 @@
+/* FriendRequestsList.module.css */
+.friendRequestsList {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+.center {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.requestInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin: 5px 0;
+}
+.image {
+    width: 30px;
+}
+.acceptButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.rejectButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}

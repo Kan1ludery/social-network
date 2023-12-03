@@ -1,0 +1,106 @@
+.container_messages {
+    display: flex;
+    width: 100%;
+}
+
+.container_messages_left {
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    min-width: 340px;
+}
+
+.container_search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search {
+    width: 100%;
+    height: 70px;
+    padding: 0 20px 0 75px;
+    background: rgba(136, 136, 136, 0.10);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+/* Стили для иконки */
+.icon {
+    position: absolute; /* Добавляем позицию relative для потомков с абсолютным позиционированием */
+}
+
+.icon i {
+    padding-left: 25px;
+}
+
+.icon i::before {
+    content: ""; /* Убираем content */
+    display: inline-block;
+    background: url("/public/assets/icons/navbar/search-icon.svg") no-repeat center center; /* Путь к изображению */
+    width: 32px; /* Ширина метатега */
+    height: 32px; /* Высота метатега */
+}
+
+.container_MessagesRequests {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+    display: flex;
+    height: 50px;
+}
+
+.container_MessagesRequests button {
+    background: none;
+}
+.container_MessagesRequests button:hover {
+    transition: 0.15s;
+    background: #d5d5d5;
+    color: white;
+}
+
+.button_messages {
+    border-right: 1px solid rgba(0, 0, 0, 0.20);
+    cursor: pointer;
+    flex: 1;
+}
+
+.button_requests {
+    cursor: pointer;
+    flex: 1;
+}
+
+/*RIGHT CONTAINER*/
+.container_messages_right {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* formik */
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+    max-height: 885px;
+    height: 100%;
+}
+
+.messageContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll; /* Позволяет прокручивать сообщения */
+    max-height: 100%;
+    overflow-anchor: none;
+}
+
+.noChatMessage {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plusButton {
+    width: 100%;
+    height: 30px;
+}

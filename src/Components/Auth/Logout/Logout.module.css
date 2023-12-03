@@ -1,0 +1,47 @@
+.container_logout {
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+}
+.button {
+    position: absolute;
+    display: inline-block;
+    padding: 20px 45px;
+    font-size: 16px;
+    color: #fff;
+    background: #708293;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    overflow: hidden;
+}
+.button:hover {
+    background: red;
+}
+.button .initial_text, .button .hover_text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.button .hover_text {
+    opacity: 0;
+    transform: translate(-150%, -50%);
+}
+
+.button:hover .hover_text {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.button:hover .initial_text {
+    opacity: 0;
+    transform: translate(50%, -50%);
+}

@@ -1,0 +1,9 @@
+.container {
+    position: sticky;
+    top: 0;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: rgba(238, 238, 244, 0.45);
+}

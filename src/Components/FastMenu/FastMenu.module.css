@@ -1,0 +1,52 @@
+/* FastMenu.module.css */
+.menu_container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+
+.menu_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu_icon img {
+    transition: transform 0.5s;
+}
+
+.menu_icon.active img {
+    transform: rotate(180deg);
+}
+
+.menu_content {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+
+}
+
+.menu_item {
+    background-color: #f0f0f0;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menu_item:hover {
+    background-color: #e0e0e0;
+}

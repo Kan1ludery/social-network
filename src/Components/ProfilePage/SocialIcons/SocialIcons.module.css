@@ -1,0 +1,7 @@
+.socialLinksContainer {
+    margin: 0 auto;
+}
+.socialLinks {
+    display: flex;
+    gap: 10px;
+}

@@ -1,0 +1,22 @@
+.container_Field {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1; /* Растягиваем поле ввода на всю доступную ширину */
+    margin-bottom: 15px;
+}
+.inputField {
+    padding: 0 20px 0 60px;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.20);
+    border-radius: 15px;
+    width: 100%; /* Растягиваем инпут на всю ширину родительского контейнера */
+    background: rgba(217, 217, 217, 0.10);
+}
+.sendMessageButton {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url("/public/assets/icons/messages/send.svg") no-repeat center center;
+    margin-left: 20px;
+}

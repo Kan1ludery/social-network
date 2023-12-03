@@ -1,0 +1,11 @@
+.container_navbar {
+    background: #F7F7FA;
+    padding-top: 20px;
+    overflow-y: auto;
+}
+.gap {
+    height: 65px;
+}
+.active-link {
+    padding: 30px;
+}

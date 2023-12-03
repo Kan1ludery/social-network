@@ -1,0 +1,111 @@
+.chatContainer {
+    transition: .15s;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap; /* Запретить перенос текста на новую строку */
+    height: 100px;
+    cursor: pointer;
+    padding: 10px 20px;
+    background: none;
+}
+
+.chatContainer:hover {
+    background: #c8d3e0;
+}
+
+.chatContainer:hover .username {
+    color: #fff;
+}
+
+.container_image {
+    position: relative;
+}
+
+.lastMessage {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatContainer:hover .lastMessage {
+    color: #fff;
+}
+
+.image {
+    width: 75px;
+    height: 75px;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.textContainer {
+    flex: 1;
+    height: 100%;
+    max-width: 185px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 10px;
+    text-align: left;
+}
+
+.username {
+    color: #8C8C8C;
+}
+
+.lastMessage {
+    color: rgba(140, 140, 140, 0.75);
+    font-size: 12px;
+}
+
+.container_dots {
+    display: flex;
+    padding: 10px;
+}
+
+.dots {
+    background: url("/public/assets/icons/messages/dots.svg") no-repeat;
+    width: 20px;
+    height: 6px;
+    cursor: pointer;
+    transition: filter 0.3s;
+}
+
+.container_dots:hover .dots {
+    filter: brightness(0.4);
+}
+/* Добавленные стили для контейнера иконок */
+.iconsContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.closeIcon {
+    width: 25px; /* Увеличиваем ширину иконки */
+    height: 25px; /* Увеличиваем высоту иконки */
+    cursor: pointer;
+    margin-right: 5px;
+}
+/* Стили для списка, который появляется при открытии меню */
+.menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff; /* Задай фон по желанию */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавь тень для эффекта всплывания */
+}
+
+/* Стили для пунктов меню */
+.menuList li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+}
+
+.menuList li:hover {
+    background-color: #f0f0f0; /* Изменение цвета при наведении */
+}

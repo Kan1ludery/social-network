@@ -1,0 +1,26 @@
+/* Убираем стандартные стили прокрутки */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Задаем фон прокручиваемой полосы */
+::-webkit-scrollbar-track {
+    background-color: #f8f8f8;
+}
+
+/* Задаем стиль прокручиваемой полосы */
+::-webkit-scrollbar-thumb {
+    background-color: #8c8c8c;
+    border-radius: 4px;
+}
+
+/* Стиль полосы при наведении */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* Стили для стрелок в начале и конце прокрутки */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: none; /* Скрываем стрелки, чтобы упростить внешний вид */
+}

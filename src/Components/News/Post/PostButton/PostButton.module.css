@@ -1,0 +1,7 @@
+.button {
+    display: flex;
+    gap: 5px;
+    position: relative;
+    cursor: pointer;
+    color: rgba(140, 140, 140, 0.75);
+}

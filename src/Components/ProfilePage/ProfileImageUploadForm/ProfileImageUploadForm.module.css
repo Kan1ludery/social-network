@@ -1,0 +1,46 @@
+/* ProfileImageUploadForm */
+.label_text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 150px;
+    border-radius: 100%;
+}
+
+.profile_image {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    transition: filter 0.3s;
+    object-fit: cover;
+    object-position: top;
+}
+
+.profile_image:hover {
+    filter: brightness(0.2);
+}
+
+.profile_image_other {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    object-fit: cover;
+    object-position: top;
+    cursor: auto;
+}
+.icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    opacity: 0;
+    transition: opacity 0.3s, transform .3s; /* Добавляем анимацию для opacity */
+    pointer-events: none;
+}
+.otherIcon {
+    display: none;
+}
+.label_text:hover .icon {
+    opacity: 1;
+    transform: scale(1.2);
+}

@@ -1,0 +1,85 @@
+
+.container_button {
+    display: flex;
+    justify-content: center;
+}
+.button_search {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    font-size: 17px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+    border: none;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.button_search:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.button_search:active {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.button_search::after {
+    background-color: #333333;
+}
+
+.button_search:hover::after {
+    transform: scaleX(1.1) scaleY(1.15);
+    opacity: 0;
+}
+
+.overlay {
+    transition: .3s;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+}
+
+.overlay:hover {
+    transition: .3s;
+    background-color: rgba(0, 0, 0, 0.6); /* Черное полупрозрачное затемнение */
+}
+.form_button {
+    transition: .15s;
+    padding: 5px;
+    background: none;
+}
+.form_button:hover {
+    background: #3F3A3A;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+.disabled_button {
+    cursor: not-allowed;
+}
+.disabled_button:hover {
+    cursor: not-allowed;
+}
+
+.search_modal {
+    background-color: #fff; /* Цвет фона модального окна */
+    border: 1px solid #ccc; /* Граница модального окна */
+    padding: 20px; /* Отступы внутри модального окна */
+    position: absolute;
+    top: 50%; /* Позиционируем по вертикали в центре экрана */
+    left: 50%; /* Позиционируем по горизонтали в центре экрана */
+    transform: translate(-50%, -50%); /* Центрируем модальное окно */
+    z-index: 55; /* Заверх модального окна над остальным контентом */
+    border-radius: 8px; /* Закругленные углы модального окна */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под модальным окном */
+}
+
+.form_input {
+    padding: 0 10px;
+}

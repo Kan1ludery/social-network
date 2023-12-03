@@ -1,0 +1,137 @@
+.container_profile {
+    transition: .15s;
+    position: relative;
+    background: url('/public/assets/img/profile/profile_background.png'), lightgray 50% / cover no-repeat;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 43px 0 0 40px;
+    height: 380px;
+}
+.container_profile_compressed {
+    padding: 19px 0 0 18px;
+}
+/* Стили для общего контейнера */
+.searchContainer {
+    display: flex;
+    align-items: center;
+}
+.icon {
+    position: absolute; /* Добавляем позицию relative для потомков с абсолютным позиционированием */
+}
+.icon i {
+    padding-left: 30px;
+}
+/* Стили для текста иконки (псевдоэлемент ::before) */
+.icon i::before {
+    content: ""; /* Убираем content */
+    display: inline-block;
+    background: url("/public/assets/icons/navbar/search-icon.svg") no-repeat center center; /* Путь к изображению */
+    width: 32px; /* Ширина метатега */
+    height: 32px; /* Высота метатега */
+}
+
+.input_bar {
+    transition: .15s;
+    width: 90%;
+    height: 70px;
+    border-radius: 35px;
+    padding: 0 20px 0 72px;
+}
+
+.input_compressed {
+    width: 50px;
+}
+
+.roll_up_button {
+    transition: .15s;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: -7%;
+    cursor: pointer;
+    background: transparent url("/public/assets/icons/navbar/roll-up-button.svg");
+}
+
+/* Кнопка работает, просто пример*/
+.roll_up_button.active {
+    transform: rotate(180deg);
+}
+
+
+/* Person */
+
+.container_person {
+    display: flex;
+    align-items: center;
+    margin-top: 110px;
+    color: white;
+}
+
+.person_image {
+    transition: .2s;
+    width: 115px;
+    height: 115px;
+    border-radius: 25px;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.person_image:hover {
+
+    filter: brightness(80%); /* Уменьшаем яркость при наведении */
+}
+
+.container_person_info {
+    transition: .1s;
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+.person_compressed {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.name {
+    font-size: 24px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tag {
+    margin-top: 10px;
+    color: #E2E2E2;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* UNREGISTERED */
+.container_unregistered {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: url('/public/assets/img/profile/profile_background.png'), lightgray 50% / cover no-repeat;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    height: 380px;
+}
+.unregistered {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    color: #3F3A3A;
+    text-align: center;
+    font-size: 18px; /* Установите желаемый размер шрифта */
+    text-shadow: 1px 1px 0 #3F3A3A; /* Горизонтальное и вертикальное смещение 2px, цвет черный */
+}
+
+.login, .register {
+    text-decoration: underline; /* Добавляет подчеркивание для ссылок */
+    margin: 5px; /* Установите желаемые отступы между ссылками и текстом */
+    color: white;
+}
+.logoutButton {
+
+}

@@ -1,0 +1,76 @@
+.layout_post {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 100%;
+    height: 640px;
+    border-radius: 25px;
+    background: rgba(238, 238, 244, 0.25);
+}
+.container_post {
+    padding: 30px;
+
+}
+.container_post_background {
+    border-radius: 30px;
+    background: rgba(217, 217, 217, 0.15);
+}
+.container_top {
+    max-width: 100%;
+    background-size: cover;
+    height: 400px;
+    border-radius: 30px 30px 0 0;
+}
+
+    .top_account {
+        display: flex;
+        justify-content: space-between;
+        padding: 35px;
+    }
+    .top_account_block {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .account_img {
+        width: 75px;
+        height: 75px;
+        border-radius: 25px;
+        background: lightgray 50% / cover no-repeat;
+    }
+    .account_info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        color: #FFF;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    .container_top_options {
+        padding: 5px;
+    }
+    .top_options {
+        background: url("/public/assets/icons/post/more.svg");
+        width: 32px;
+        height: 8px;
+    }
+
+.container_middle {
+    padding: 25px;
+}
+    .container_tags {
+        display: flex;
+        gap: 15px;
+    }
+    .container_tags a {
+        color: rgba(140, 140, 140, 0.75);
+        font-size: 16px;
+    }
+    .post_name {
+        margin-top: 20px;
+        color: #8C8C8C;
+    }
+
+.container_bottom {
+    display: flex;
+    gap: 35px;
+    padding: 25px 25px 25px 40px;
+}

@@ -1,0 +1,20 @@
+.status_indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.status_circle {
+    transition: .3s;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: black;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.online {
+    background-color: limegreen;
+}
+
+.offline {
+    background-color: grey;
+}

@@ -1,0 +1,55 @@
+.container_profile_description {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto 0;
+}
+
+.placeholder {
+    display: block;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-align: center;
+    word-break: break-all;
+}
+
+.placeholder:hover {
+    color: #333;
+}
+
+.description {
+    width: 100%;
+    min-height: 100px; /* Минимальная высота текстовой области */
+    max-height: 400px; /* Максимальная высота текстовой области */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical; /* Разрешить изменение размера только по вертикали */
+    transition: border-color 0.3s ease;
+    overflow-y: auto; /* Добавить вертикальный скролл при необходимости */
+}
+
+.description:focus {
+    outline: none;
+    border-color: #48bbff;
+    box-shadow: 0 0 0 2px rgba(72, 187, 255, 0.2);
+}
+.description.error {
+    border-color: #ff4d4f; /* Цвет рамки при ошибке */
+}
+.charactersCount {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 12px;
+    color: #999;
+}
+.errorMessage {
+    display: flex;
+    justify-content: center;
+    color: red;
+    font-size: 24px;
+}
