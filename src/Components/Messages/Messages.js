@@ -50,15 +50,15 @@ const Messages = ({
                             onClick={() => handleTabClick('messages')}>messages
                     </button>
                     <button className={styles.button_requests}
-                            onClick={() => handleTabClick('requests')}>requests {usersRequests.requestsCount > 0 ? usersRequests.requestsCount : ''}
+                            onClick={() => handleTabClick('requests')}>requests {usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''}
                     </button>
                 </div>
                 {/** Переключение вкладки messages/requests */}
                 {activeTab === 'messages'
                     ? (
                         <div>
-                            <button onClick={openOverlay} className={styles.plusButton}>plus</button>
-                            {isOverlayOpen && <CreateChat closeOverlay={closeOverlay}/>}
+                            <button onClick={openOverlay} className={styles.plusButton}>Create new chat</button>
+                            {isOverlayOpen && <CreateChat closeOverlay={closeOverlay} onlineUsers={onlineUsers}/>}
                             {isLoading === false ? <ChatList chatList={chatList} handleChatClick={handleChatClick} onlineUsers={onlineUsers}/> :
                                 <Loading/>}
                         </div>

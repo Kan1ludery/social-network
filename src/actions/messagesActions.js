@@ -3,7 +3,7 @@
 import {
     ADD_FRIEND_REQUEST,
     ADD_SENT_MESSAGE,
-    DELETE_FRIEND_REQUEST,
+    DELETE_FRIEND_REQUEST, DELETE_USER_CHAT,
     SCROLL_CHAT,
     SET_ACTIVE_CHAT,
     SET_CHAT_LIST,
@@ -36,10 +36,13 @@ export const addFriendRequest = (friendId) => ({
 export const deleteFriendRequest = (friendId) => ({
     type: DELETE_FRIEND_REQUEST, payload: friendId,
 });
-export const setActiveChat = (chatId, messages, username, profileImage, status) => {
+export const deleteUserChatId = (chatId) => ({
+    type: DELETE_USER_CHAT, payload: chatId,
+});
+export const setActiveChat = (chatId, messages, username, profileImage, status, targetId) => {
     return {
         type: SET_ACTIVE_CHAT, payload: {
-            chatId, messages, username, profileImage, status,
+            chatId, messages, username, profileImage, status, targetId
         },
     };
 };
@@ -115,13 +118,13 @@ export const rejectFriend = (friendId) => async (dispatch) => {
     }
 };
 
-export const getChatInfo = (chatData, from, to, status) => async (dispatch) => {
+export const getChatInfo = (chatData, from, to, status, targetId) => async (dispatch) => {
     try {
         dispatch(setLoading(true))
         const chatInfo = await messagesAPI.getChatInfo(chatData.chatId, from, to);
         console.log('thunk', chatInfo)
-        const {chatId, profileImage, username} = chatData
-        dispatch(setActiveChat(chatId, chatInfo.messages, username, profileImage, status));
+        const {chatId, profileImage, username, friendId} = chatData
+        dispatch(setActiveChat(chatId, chatInfo.messages, username, profileImage, status, friendId));
         dispatch(setLoading(false))
     } catch (error) {
         console.error('Error getting chat information:', error);
@@ -142,6 +145,7 @@ export const deleteUserChat = (chatId) => async (dispatch) => {
     try {
         console.log(chatId)
         const chat = await messagesAPI.deleteChat(chatId);
+        dispatch(deleteUserChatId(chatId))
         console.log(chat)
     } catch (error) {
         console.error('Error while scrolling chat:', error);

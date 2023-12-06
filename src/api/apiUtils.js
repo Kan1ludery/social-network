@@ -1,6 +1,7 @@
 // apiUtils.js
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
+import getUserInfoFromToken from "../Utils/Functions/getUserInfoFromToken";
 
 const instance = axios.create({
     baseURL: "http://localhost:3001/api", // URL сервера API
@@ -37,7 +38,7 @@ export function isAuthenticated() {
 // Запрос на обновление токена
 export async function refreshAuthToken() {
     try {
-        if (isAuthenticated) {
+        if (!!getUserInfoFromToken()) {
             const response = await instance.post('/refresh-token');
             const {newToken} = response.data;
             // Сохранить новый JWT-токен

@@ -4,7 +4,7 @@ import styles from "./MessagesForm.module.css";
 import {useSelector} from "react-redux";
 
 const MessagesForm = ({chatData, webSocket}) => {
-    const {chatId} = chatData
+    const {chatId, targetId} = chatData
     const {_id: currentUserId} = useSelector((state) => state.userReducer.user);
     return (
         <Formik
@@ -12,6 +12,7 @@ const MessagesForm = ({chatData, webSocket}) => {
             onSubmit={(values, {resetForm}) => {
                 if (webSocket && values.message) {
                     const messageData = {
+                        targetId: targetId,
                         senderId: currentUserId,
                         chatId: chatId,
                         message: values.message,

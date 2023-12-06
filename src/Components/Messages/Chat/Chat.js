@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styles from './Chat.module.css';
 import UserImage from '../../../Utils/UserImage/UserImage';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,7 +7,7 @@ import {deleteUserChat} from "../../../actions/messagesActions";
 
 const Chat = ({ chatData, handleChatClick, isOnline }) => {
     const dispatch = useDispatch()
-    const { chatId, username, profileImage } = chatData;
+    const { chatId, username, profileImage, isPersonal} = chatData;
     const lastMessage = chatData.lastMessage || {};
     const { senderId, text } = lastMessage;
     const { _id: currentUserId } = useSelector((state) => state.userReducer.user);
@@ -25,29 +25,28 @@ const Chat = ({ chatData, handleChatClick, isOnline }) => {
         <button className={styles.chatContainer} onClick={() => handleChatClick(chatData, isOnline)}>
             <div className={styles.container_image}>
                 <UserImage imageName={profileImage} alt="person_chat" className={styles.image} />
-                <OnlineStatusIndicator isOnline={isOnline} />
+                {!isPersonal && <OnlineStatusIndicator isOnline={isOnline} />}
             </div>
             <div className={styles.textContainer} title={text}>
-                <div className={styles.username}>{username}</div>
+                <div className={styles.username}>{`${!isPersonal ? username : 'Personal chat'}`}</div>
                 {text ? (
-                    <div className={styles.lastMessage}>{isCurrentUser ? 'You: ' : `${username}: `}{text}</div>
+                    <div className={styles.lastMessage}>{!isPersonal && `${isCurrentUser ? 'You: ' : `${username}: `} ${text}`}</div>
                 ) : (
                     ''
                 )}
             </div>
-            <div className={styles.container_dots} onClick={clickFunc}>
-                {/* Используем тернарный оператор для отображения разных иконок */}
-                <div className={styles.iconsContainer}>
-
-                    <div className={styles.dots}></div>
-                    {isMenuOpen && (
-                        <ul className={styles.menuList}>
-                            <li onClick={deleteChat}>Delete Chat</li>
-                            {/* Добавь другие пункты меню по необходимости */}
-                        </ul>
-                    )}
+            {!isPersonal && (
+                <div className={styles.container_dots} onClick={clickFunc}>
+                    <div className={styles.iconsContainer}>
+                        <div className={styles.dots}></div>
+                        {isMenuOpen && (
+                            <ul className={styles.menuList}>
+                                <li onClick={deleteChat}>Delete Chat</li>
+                            </ul>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </button>
     );
 };

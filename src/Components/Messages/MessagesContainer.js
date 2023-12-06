@@ -19,8 +19,10 @@ const MessagesContainer = (props) => {
 
     const dispatch = useDispatch()
 
-    const {chatList, usersRequests, isLoading, activeChat} = useSelector((state) => state.messagesReducer)
 
+    const {user} = useSelector((state) => state.userReducer)
+    const {_id: userId} = user
+    const {chatList, usersRequests, isLoading, activeChat} = useSelector((state) => state.messagesReducer)
     useEffect(() => {
         dispatch(fetchChatList())
         dispatch(fetchFriendRequests());
@@ -29,28 +31,41 @@ const MessagesContainer = (props) => {
         const connectWebSocket = async () => {
             if (chatList.length > 0) {
                 if (!webSocket) {
-                    const chatIds = chatList.map(chat => chat.chatId).join('/');
-                    const socket = new WebSocket(`ws://localhost:8080/${chatIds}`);
-                    socket.onopen = () => {
-                        console.log('WebSocket connection opened.');
-                        setWebSocket(socket);
-                    };
-                    socket.onmessage = (event) => {
-                        const messageData = JSON.parse(event.data);
-                        const {chatId, ...rest} = messageData;
-                        console.log(`Получено сообщение от сервера: ${rest.text}`);
-                        dispatch(addSentMessage(rest));
-                        dispatch(updateLastMessage(chatId, rest));
-                    };
-                    socket.onclose = () => {
-                        console.log('WebSocket connection closed.');
-                        setWebSocket(null);
-                    };
+                    if (userId) {
+                        const chatIds = chatList.map(chat => chat.chatId).join('/');
+                        const socket = new WebSocket(`ws://localhost:8080/${chatIds}/${userId}`);
+                        socket.onopen = () => {
+                            console.log('WebSocket connection opened.');
+                            setWebSocket(socket);
+                        };
+                        socket.onmessage = (event) => {
+                            const messageData = JSON.parse(event.data);
+                            console.log(messageData)
+                            switch (messageData.type) {
+                                case 'chatMessage':
+                                    const {chatId, ...rest} = messageData;
+                                    console.log(`Получено сообщение от сервера: ${rest.text}`);
+                                    dispatch(addSentMessage(rest));
+                                    dispatch(updateLastMessage(chatId, rest));
+                                    break;
+                                case 'chatCreated':
+                                    console.log(`Чат с ID ${messageData.chatId} был успешно создан.`);
+                                    dispatch(fetchChatList())
+                                    break;
+                                default:
+                                    break;
+                            }
+                        };
+                        socket.onclose = () => {
+                            console.log('WebSocket connection closed.');
+                            setWebSocket(null);
+                        };
+                    }
                 }
             }
         }
         connectWebSocket()
-    }, [dispatch, webSocket, chatList]);
+    }, [dispatch, webSocket, chatList, userId]);
     useEffect(() => {
         return () => {
             // Функция выполнится при размонтировании компонента
@@ -63,6 +78,7 @@ const MessagesContainer = (props) => {
     useEffect(() => {
         // Получаем ссылку на элемент inputContainer через useRef
         const current = messageContainer.current;
+
         function handleScroll() {
             if (current) {
                 const isAtBottom = current.scrollHeight + current.scrollTop === current.clientHeight;
@@ -77,6 +93,7 @@ const MessagesContainer = (props) => {
                 }
             }
         }
+
         if (current) {
             current.addEventListener('scroll', handleScroll);
         }
@@ -87,7 +104,7 @@ const MessagesContainer = (props) => {
         };
     }, [dispatch, loadedMessageCount, activeChat]);
 
-    const handleChatClick = async (chatData, status) => {
+    const handleChatClick = async (chatData, status, targetId = null) => {
         try {
             dispatch(getChatInfo(chatData, 0, messagesPerPage, status));
             setLoadedMessageCount(messagesPerPage);

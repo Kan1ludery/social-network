@@ -4,30 +4,32 @@ import {usersAPI} from '../../api/api';
 import withAuth from '../../hoc/withAuth';
 import Loading from '../../Utils/Loading/Loading';
 import UserCard from "./UserCard/UserCard";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import RequestsPage from "../Messages/RequestsPage/RequestsPage";
+import {fetchFriendRequests} from "../../actions/messagesActions";
 
 const FriendsPage = () => {
+    const dispatch = useDispatch()
     const [data, setData] = useState([]);
     const [count, setCount] = useState(0);
     const [activeTab, setActiveTab] = useState('friends');
     const {onlineUsers} = useSelector((state) => state.userReducer);
     const {usersRequests} = useSelector((state) => state.messagesReducer)
+    console.log(usersRequests)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (activeTab === 'friends') {
-                    const usersData = await usersAPI.getFriends();
-                    const {friends, friendCount} = usersData;
-                    setData(friends);
-                    setCount(friendCount);
-                }
+                dispatch(fetchFriendRequests());
+                const usersData = await usersAPI.getFriends();
+                const {friends, friendCount} = usersData;
+                setData(friends);
+                setCount(friendCount);
             } catch (error) {
                 console.error('Error fetching data in component:', error);
             }
         };
         fetchData();
-    }, [activeTab]);
+    }, [dispatch, activeTab]);
 
     const handleTabChange = (tabName) => {
         setActiveTab(tabName);
@@ -40,7 +42,7 @@ const FriendsPage = () => {
                     Friends
                 </button>
                 <button onClick={() => handleTabChange('friendRequests')}>
-                    Friend Requests
+                    Friend Requests {usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''}
                 </button>
             </div>
             {

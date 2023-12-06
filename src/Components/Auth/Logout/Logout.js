@@ -19,8 +19,11 @@ const Logout = () => {
             localStorage.removeItem('expiresIn');
             dispatch(logoutUser());
             dispatch(setAuthStatus(false))
+
             // Перенаправляем пользователя на страницу входа или куда угодно еще
-            navigate('/login'); // Предполагается, что у вас есть navigate из React Router
+            navigate('/login');
+            // Перезагружаем страницу
+            window.location.reload();
         } catch (error) {
             console.error('Ошибка при выходе:', error);
         }

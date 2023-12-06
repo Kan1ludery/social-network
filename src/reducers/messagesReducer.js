@@ -10,7 +10,7 @@ export const UPDATE_LAST_MESSAGE = 'UPDATE_LAST_MESSAGE'
 export const UPDATE_MODAL_STATE = 'UPDATE_MODAL_STATE'
 export const SCROLL_CHAT = 'SCROLL_CHAT'
 export const ADD_SENT_MESSAGE = 'ADD_SENT_MESSAGE';
-
+export const DELETE_USER_CHAT = 'DELETE_USER_CHAT';
 
 const initialState = {
     usersRequests: [], // Список заявок пользователей
@@ -42,12 +42,16 @@ const messagesReducer = (state = initialState, action) => {
             };
         case DELETE_FRIEND_REQUEST:
             // Фильтруем массив и удаляем запись с заданным friendId
-            console.log(state.usersRequests.usersRequests)
             const updatedRequestsDelete = state.usersRequests.usersRequests.filter(request => request._id !== action.payload.friendId);
-
-            console.log(updatedRequestsDelete)
             return {
                 ...state, usersRequests: updatedRequestsDelete,
+            };
+        case DELETE_USER_CHAT:
+            const updatedChatList = state.chatList.filter(chat => chat.chatId !== action.payload);
+            console.log(updatedChatList)
+            return {
+                ...state,
+                chatList: updatedChatList,
             };
         case SET_ACTIVE_CHAT:
             return {
@@ -58,6 +62,7 @@ const messagesReducer = (state = initialState, action) => {
                     username: action.payload.username,
                     profileImage: action.payload.profileImage,
                     currentStatus: action.payload.status,
+                    targetId: action.payload.targetId,
                 },
             };
         case SCROLL_CHAT:

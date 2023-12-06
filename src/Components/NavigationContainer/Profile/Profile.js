@@ -7,7 +7,6 @@ import Logout from "../../Auth/Logout/Logout";
 const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName}) => {
     const {username, email} = user
     const [showLogoutButton, setShowLogoutButton] = useState(false);
-
     const handleImageClick = () => {
         setShowLogoutButton(!showLogoutButton);
     };
@@ -33,7 +32,7 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
                 <div onClick={handleImageClick}>
                     <UserImage imageName={userImageFileName} alt="profile_person" className={styles.person_image}/>
                     {showLogoutButton && (
-                        <Logout/>
+                        <Logout />
                     )}
                 </div>
 

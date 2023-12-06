@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './UserCard.module.css';
 import UserImage from "../../../Utils/UserImage/UserImage";
+import OnlineStatusIndicator from "../../../Utils/OnlineStatusIndicator/OnlineStatusIndicator";
 
 const UserCard = ({ user, isFriend, onToggleFriendship, isOnline }) => {
     return (
@@ -17,6 +18,7 @@ const UserCard = ({ user, isFriend, onToggleFriendship, isOnline }) => {
                         Добавить в друзья
                     </button>
                 )}
+                <OnlineStatusIndicator isOnline={isOnline} />
             </div>
 
         </div>

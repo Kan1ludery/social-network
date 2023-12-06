@@ -4,11 +4,11 @@ const getUserInfoFromToken = () => {
     const token = localStorage.getItem('token');
     if (!token) {
         console.error('JWT токен отсутствует в локальном хранилище.');
-        return true;
+        return false;
     }
     try {
         const decodedToken = jwtDecode(token);
-        const { userId, emailVerified } = decodedToken;
+        const { userId, emailVerified} = decodedToken;
 
         if (!userId) {
             console.error('JWT токен не содержит необходимой информации о пользователе.');
