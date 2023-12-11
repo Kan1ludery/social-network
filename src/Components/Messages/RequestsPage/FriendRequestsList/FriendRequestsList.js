@@ -6,15 +6,14 @@ import UserImage from "../../../../Utils/UserImage/UserImage";
 
 const FriendRequestsList = ({usersRequestList}) => {
     const {usersRequests = []} = usersRequestList
-    console.log(usersRequests)
     const dispatch = useDispatch()
     const accept = async (friendId) => {
-        dispatch(acceptFriend(friendId))
-        dispatch(fetchChatList());
+        await dispatch(acceptFriend(friendId))
+        await dispatch(fetchChatList());
     }
     const reject = async (friendId) => {
-        dispatch(rejectFriend(friendId))
-        dispatch(fetchChatList());
+        await dispatch(rejectFriend(friendId))
+        await dispatch(fetchChatList());
     }
     return (
         <div className={styles.friendRequestsList}>
@@ -25,7 +24,7 @@ const FriendRequestsList = ({usersRequestList}) => {
                     usersRequests.map((request) => (
                         <li key={request._id}>
                             <div className={styles.requestInfo}>
-                                <UserImage imageName={request.profile.profileImage} className={styles.image} alt={'req_img'} />
+                                <UserImage imageName={request.profile.profileImage} className={styles.image} alt={'req_img'} clickable={true} to={`/profile/${request.username}`}/>
                                 <div>
                                     <span className={styles.center}>От: {request.username}</span>
                                     <div className={styles.requestButtons}>

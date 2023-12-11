@@ -1,0 +1,276 @@
+.card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr; /* Один столбец */
+    grid-template-rows: auto auto 1fr; /* Автоматическая высота для первых двух строк, оставшееся пространство для описания и списка */
+    width: 90%;
+    height: 100vh;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 15px;
+}
+
+.title {
+    color: #3f3a3a;
+    font-size: 52px;
+}
+
+.containerSpan {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cardImage {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.titleContent {
+    font-size: 14px;
+    color: grey;
+    text-transform: uppercase;
+}
+
+.cardContent {
+    text-align: center;
+    left: 50%;
+    bottom: 20px;
+}
+
+.containerTech {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.containerTech li {
+    padding-right: 15px; /* Однородный отступ справа */
+    position: relative;
+}
+
+.containerTech li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px; /* Ширина границы */
+    background-color: black; /* Цвет границы */
+}
+
+.containerTech li:last-child::after {
+    display: none; /* Убираем границу у последнего элемента */
+}
+
+.cardDescription {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* ABOUT */
+
+.aboutTitle {
+    justify-self: center;
+}
+
+.aboutImage {
+    width: 350px;
+    border-radius: 10px;
+    grid-row: 2;
+    justify-self: center;
+}
+
+.aboutDescription {
+
+}
+
+.aboutContent {
+
+}
+
+/* PROFILE */
+
+.profileTitle {
+    text-align: center;
+    min-width: 440px;
+    grid-column: 2;
+    justify-self: center;
+}
+
+.profileImage {
+    grid-column: 2;
+    border-radius: 15px;
+    justify-self: center;
+    width: 350px;
+    height: 350px;
+}
+
+.profileDescription {
+    grid-row: 2;
+    grid-column: 1;
+    align-self: end;
+}
+
+.profileContent {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+/* NEWS */
+
+
+.newsTitle {
+    justify-self: center;
+}
+
+.newsImage {
+    width: 670px;
+    height: 490px;
+    border-radius: 0;
+    justify-self: center;
+    grid-row: 3;
+}
+
+.newsDescription {
+    justify-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+.newsContent {
+
+}
+
+/* MESSAGES */
+
+.messagesTitle {
+    text-align: center;
+}
+
+.messagesImage {
+    grid-row: 2;
+}
+
+.messagesDescription {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.messagesContent {
+    grid-row: 3;
+    grid-column: 2;
+}
+
+/* FRIENDS */
+
+.friendsCard {
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto;
+}
+
+.friendsTitle {
+    justify-self: center;
+    align-self: end;
+    grid-column: 2;
+}
+
+.friendsImage {
+    justify-self: center;
+    grid-column: 2;
+}
+
+.friendsDescription {
+    text-align: center;
+    justify-self: center;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.friendsContent {
+    grid-column: 2;
+    align-self: end;
+}
+
+/* SAVED */
+
+.savedTitle {
+    justify-self: center;
+}
+
+.savedImage {
+    width: 670px;
+    height: 490px;
+    border-radius: 0;
+    justify-self: center;
+    grid-row: 3;
+}
+
+.savedDescription {
+    justify-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+/* SETTINGS */
+
+.settingsTitle {
+    justify-self: center;
+}
+
+.settingsImage {
+    width: 670px;
+    height: 490px;
+    border-radius: 0;
+    justify-self: center;
+    grid-row: 3;
+}
+
+.settingsDescription {
+    justify-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+/* LOGOUT */
+
+.logoutCard {
+    min-width: 740px;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: auto;
+}
+
+.logoutTitle {
+    justify-self: center;
+    align-self: end;
+    grid-column: 2;
+}
+
+.logoutImage {
+    justify-self: center;
+    grid-column: 2;
+}
+
+.logoutDescription {
+    text-align: center;
+    justify-self: center;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.logoutContent {
+    grid-column: 2;
+    align-self: end;
+}
+
+/* FINAL */
+
+.finalImage {
+    justify-self: center;
+    grid-row: 3;
+}

@@ -1,47 +1,39 @@
-.container_logout {
-    transition: all 0.3s ease;
+.logoutPage {
+    margin: 0 auto;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-.button {
-    position: absolute;
-    display: inline-block;
-    padding: 20px 45px;
-    font-size: 16px;
-    color: #fff;
-    background: #708293;
+
+.logoutContainer {
+    text-align: center;
+}
+
+.icon {
+    /* Стили для вашей иконки */
+    /* Например: */
+    font-size: 48px;
+    /* Добавьте другие стили для иконки */
+}
+
+.text {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.buttonCreate {
+    margin-top: 20px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease;
-    overflow: hidden;
-}
-.button:hover {
-    background: red;
-}
-.button .initial_text, .button .hover_text {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
-    color: #fff;
-    opacity: 1;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-.button .hover_text {
-    opacity: 0;
-    transform: translate(-150%, -50%);
-}
-
-.button:hover .hover_text {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-}
-
-.button:hover .initial_text {
-    opacity: 0;
-    transform: translate(50%, -50%);
+.buttonCreate:hover {
+    background-color: #555;
 }

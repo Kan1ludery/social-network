@@ -3,10 +3,12 @@ import styles from "./News.module.css";
 import History from "./HistoryComponent/History";
 import Search from "../../Utils/SearchComponent/Search";
 import Post from "./Post/Post";
+import DevelopmentWarning from "../../Utils/DevelopmentWarning/DevelopmentWarning";
 
 const News = (props) => {
     return (
         <div className={styles.container_main}>
+            <DevelopmentWarning />
             <div className={styles.container_lim}>
                 <div className={styles.history_flex}>
                     <History iUrl={'/assets/icons/plus.svg'} isPlus={true}/>

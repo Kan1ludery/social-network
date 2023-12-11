@@ -3,7 +3,8 @@
 import {
     ADD_FRIEND_REQUEST,
     ADD_SENT_MESSAGE,
-    DELETE_FRIEND_REQUEST, DELETE_USER_CHAT,
+    DELETE_FRIEND_REQUEST,
+    DELETE_USER_CHAT,
     SCROLL_CHAT,
     SET_ACTIVE_CHAT,
     SET_CHAT_LIST,
@@ -64,6 +65,7 @@ export const updateLastMessage = (chatId, rest) => {
 export const updateSearchModal = (setModal) => ({
     type: UPDATE_MODAL_STATE, payload: setModal
 });
+
 // Асинхронное действие для получения данных из API и обновления Redux-состояния
 export const fetchFriendRequests = () => async (dispatch) => {
     try {
@@ -77,10 +79,9 @@ export const fetchFriendRequests = () => async (dispatch) => {
     }
 };
 
-export const fetchUsersSearch = (values) => async (dispatch) => {
+export const fetchUsersSearch = (value) => async (dispatch) => {
     try {
-        const response = await messagesAPI.getSearchFriends(values.searchQuery);
-        dispatch(setSearchResults(response));
+
     } catch (error) {
         console.error('Ошибка при получении поисковых запросов на дружбу:', error);
         dispatch(setSearchResults([])); // Очищаем результаты поиска
@@ -92,7 +93,6 @@ export const fetchChatList = () => async (dispatch) => {
     try {
         dispatch(setLoading(true)); // Устанавливаем isLoading в true перед запросом
         const response = await messagesAPI.getChatList();
-        console.log(response, 'chats')
         dispatch(setChatList(response))
         dispatch(setLoading(false));
     } catch (error) {
@@ -111,7 +111,6 @@ export const acceptFriend = (friendId) => async (dispatch) => {
 export const rejectFriend = (friendId) => async (dispatch) => {
     try {
         await messagesAPI.rejectFriendRequest(friendId);
-        console.log(friendId)
         dispatch(deleteFriendRequest(friendId))
     } catch (error) {
         console.error('Error rejecting friend request:', error);
@@ -122,7 +121,6 @@ export const getChatInfo = (chatData, from, to, status, targetId) => async (disp
     try {
         dispatch(setLoading(true))
         const chatInfo = await messagesAPI.getChatInfo(chatData.chatId, from, to);
-        console.log('thunk', chatInfo)
         const {chatId, profileImage, username, friendId} = chatData
         dispatch(setActiveChat(chatId, chatInfo.messages, username, profileImage, status, friendId));
         dispatch(setLoading(false))
@@ -133,9 +131,7 @@ export const getChatInfo = (chatData, from, to, status, targetId) => async (disp
 
 export const scrollChatThunk = (chatId, from, to) => async (dispatch) => {
     try {
-        console.log(chatId, from, to)
         const newMessages = await messagesAPI.getChatInfo(chatId, from, to);
-        console.log(newMessages)
         dispatch(scrollChat(newMessages.messages));
     } catch (error) {
         console.error('Error while scrolling chat:', error);
@@ -143,10 +139,8 @@ export const scrollChatThunk = (chatId, from, to) => async (dispatch) => {
 };
 export const deleteUserChat = (chatId) => async (dispatch) => {
     try {
-        console.log(chatId)
-        const chat = await messagesAPI.deleteChat(chatId);
+        await messagesAPI.deleteChat(chatId);
         dispatch(deleteUserChatId(chatId))
-        console.log(chat)
     } catch (error) {
         console.error('Error while scrolling chat:', error);
     }

@@ -9,10 +9,15 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_AUTH_STATUS = 'SET_AUTH_STATUS';
 export const UPDATE_USER_IMAGE = 'UPDATE_USER_IMAGE'
 export const GET_RANDOM_USERS = 'GET_RANDOM_USERS'
+export const SET_CHATTED_USERS = 'SET_CHATTED_USERS'
 export const SET_SOCIAL_LINK = 'SET_SOCIAL_LINK';
 export const UPDATE_SOCIAL_LINKS = 'UPDATE_SOCIAL_LINKS';
 export const SET_DESCRIPTION = 'SET_DESCRIPTION'
 export const UPDATE_TOKEN = 'UPDATE_TOKEN'
+export const SET_FRIENDS = 'SET_FRIENDS';
+export const SET_FRIENDS_COUNT = 'SET_FRIENDS_COUNT';
+export const DELETE_FRIEND = 'DELETE_FRIEND';
+export const SET_CONFIRMATION_MESSAGE = 'SET_CONFIRMATION_MESSAGE'
 
 const initialState = {
     // Начальное состояние текущего пользователя
@@ -30,7 +35,11 @@ const initialState = {
     },
     onlineUsers: [],
     randomUsers: [],
+    chattedUsers: [],
     socialLinks: [],
+    friendsList: [],
+    friendsCount: 0,
+    confirmationMessage: '',
     isLoading: false, // Флаг загрузки
     error: null, errorMessage: null, isAuth: false, // Состояние авторизации
     placeholderImage: '/assets/img/main/post/placeholder.png', // URL заглушки
@@ -117,6 +126,31 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state, randomUsers: action.payload
             }
+        case SET_CHATTED_USERS:
+            return {
+                ...state, chattedUsers: action.payload
+            }
+        case SET_FRIENDS:
+            return {
+                ...state,
+                friendsList: action.payload,
+            };
+        case SET_FRIENDS_COUNT:
+            return {
+                ...state,
+                friendsCount: action.payload,
+            };
+        case DELETE_FRIEND:
+            const updatedFriends = state.friendsList.filter((friend) => friend._id !== action.payload);
+            return {
+                ...state,
+                friendsList: updatedFriends,
+            };
+        case SET_CONFIRMATION_MESSAGE:
+            return {
+                ...state,
+                confirmationMessage: action.payload,
+            };
         default:
             return state;
     }

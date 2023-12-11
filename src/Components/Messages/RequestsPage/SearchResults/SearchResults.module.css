@@ -1,11 +1,44 @@
-.container_user {
+/* SearchResults.module.css */
+
+.containerSearch {
+    margin-top: 20px;
+}
+
+.userList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.userItem {
+    margin-bottom: 15px;
+}
+
+.containerUser {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
+
 .image {
     width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
-.username {
 
+.username {
+    font-size: 18px;
+}
+
+.button {
+    padding: 8px 16px;
+    background-color: #3F3A3A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+    background-color: #5F5A5A;
 }

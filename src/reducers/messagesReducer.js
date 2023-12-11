@@ -48,7 +48,6 @@ const messagesReducer = (state = initialState, action) => {
             };
         case DELETE_USER_CHAT:
             const updatedChatList = state.chatList.filter(chat => chat.chatId !== action.payload);
-            console.log(updatedChatList)
             return {
                 ...state,
                 chatList: updatedChatList,

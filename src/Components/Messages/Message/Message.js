@@ -4,7 +4,8 @@ import UserImage from "../../../Utils/UserImage/UserImage";
 import {useSelector} from "react-redux";
 import {formatTimeToHoursMinutes} from "../../../Utils/formatTimeToHoursMinutes/formatTimeToHoursMinutes";
 
-const Message = ({message, profileImage}) => {
+const Message = ({message, profileImage, otherUsername}) => {
+    const {user} = useSelector((state) => state.userReducer);
     const {_id: currentUserId, profile} = useSelector((state) => state.userReducer.user);
     const {text, senderId, timestamp} = message
     // Форматируем время сообщения
@@ -17,8 +18,8 @@ const Message = ({message, profileImage}) => {
     return (
         <div className={messageContainerClass}>
             {isCurrentUser
-                ? <UserImage className={styles.circle} alt={'message_person'} imageName={profile.profileImage} />
-                : <UserImage className={styles.circle} alt={'message_person'} imageName={profileImage} />
+                ? <UserImage className={styles.circle} alt={'message_person'} imageName={profile.profileImage} clickable={true} to={`/profile/${user.username}`}/>
+                : <UserImage className={styles.circle} alt={'message_person'} imageName={profileImage} clickable={true} to={`/profile/${otherUsername}`}/>
             }
             <div className={styles.contentContainer}>{text}</div>
             <div className={styles.time}>{formattedTime}</div>

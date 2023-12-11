@@ -24,7 +24,7 @@ const NavigationContainer = (props) => {
     return (
         <div className={styles.container} style={containerStyle}>
             <Profile isCompressed={isCompressed} setIsCompressed={setIsCompressed} user={user} isAuth={isAuth} userImageFileName={userImageFileName}/>
-            <Navbar isCompressed={isCompressed} user={user}/>
+            <Navbar isCompressed={isCompressed} user={user} isAuth={isAuth}/>
         </div>
     );
 };

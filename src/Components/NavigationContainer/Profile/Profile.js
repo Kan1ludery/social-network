@@ -1,15 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './Profile.module.css'
 import Search from "../../../Utils/SearchComponent/Search";
 import UserImage from "../../../Utils/UserImage/UserImage";
-import Logout from "../../Auth/Logout/Logout";
 
 const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName}) => {
     const {username, email} = user
-    const [showLogoutButton, setShowLogoutButton] = useState(false);
-    const handleImageClick = () => {
-        setShowLogoutButton(!showLogoutButton);
-    };
     return (<div>
         {isAuth ? <div
             className={!isCompressed ? styles.container_profile : `${styles.container_profile} ${styles.container_profile_compressed}`}>
@@ -20,6 +15,7 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
                     id={'profileSearch'}
                     type={'search'}
                     isCompressed={isCompressed}
+                    isDisabled={true}
                 />
                 <span className={styles.icon}>
                         <i className={styles.searchIcon}></i>
@@ -29,11 +25,8 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
                     onClick={setIsCompressed} aria-label="Roll Up"></button>
             </div>
             <div className={styles.container_person}>
-                <div onClick={handleImageClick}>
-                    <UserImage imageName={userImageFileName} alt="profile_person" className={styles.person_image}/>
-                    {showLogoutButton && (
-                        <Logout />
-                    )}
+                <div>
+                    <UserImage imageName={userImageFileName} alt="profile_person" className={styles.person_image} clickable={true} to={`/profile/${username}`}/>
                 </div>
 
                 <div

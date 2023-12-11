@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    max-width: 600px;
 }
 .container {
     display: flex;
@@ -24,29 +25,38 @@
 }
 
 .message {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: grey;
 }
 
-.button {
+.buttonCreate {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #3f3a3a;
     color: white;
-    border: none;
+    border: 1px solid transparent; /* Установка прозрачной границы */
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
-.button:disabled {
+.buttonCreate:hover {
+    background-color: #fff;
+    color: #3f3a3a;
+    border: 1px solid grey;
+}
+.buttonCreate:disabled {
     opacity: 0.7;
     cursor: not-allowed;
-}
-
-.button:hover {
-    background-color: #0056b3;
 }
 
 .instructions {
     font-size: 16px;
     margin-bottom: 20px;
+    text-align: center;
+}
+.underText {
+    margin-top: 5px;
+    font-size: 12px;
+    color: grey;
 }

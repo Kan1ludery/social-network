@@ -38,7 +38,7 @@ export const usersAPI = {
             return response.data;
         } catch (error) {
             console.error('Ошибка при подтверждении почты:', error);
-            throw new Error('Ошибка при подтверждении почты');
+            throw error
         }
     },
     async getFriends() {
@@ -46,7 +46,6 @@ export const usersAPI = {
             const config = await createAuthHeaderConfig();
             const headers = config.headers ? config.headers : {};
             const response = await instance.get('/friends', {headers});
-            console.log(response.data)
             return response.data;
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -175,6 +174,17 @@ export const messagesAPI = {
             console.error('Ошибка при удалении пользователя из заявок:', error);
         }
     },
+    async deleteFriendship(userId, friendId) {
+        try {
+            const config = await createAuthHeaderConfig();
+            const headers = config.headers ? config.headers : {};
+            const response = await instance.delete(`/deleteFriendship/${userId}/${friendId}`, {headers});
+            return response.data
+        } catch (error) {
+            console.error('Ошибка при удалении пользователя из заявок:', error);
+        }
+    },
+
     async getChatList() {
         try {
             const config = await createAuthHeaderConfig();
@@ -215,6 +225,27 @@ export const messagesAPI = {
             console.error('Ошибка при получении сообщений:', error);
         }
     },
+    async myDeletedChats() {
+        try {
+            const config = await createAuthHeaderConfig();
+            const headers = config.headers ? config.headers : {};
+            const response = await instance.get(`/myDeletedChats`, {headers});
+            return response.data
+        } catch (error) {
+            console.error('Ошибка при получении сообщений:', error);
+        }
+    },
+    async restoreAccessToChat(chatId, otherUserId) {
+        try {
+            const config = await createAuthHeaderConfig();
+            const headers = config.headers ? config.headers : {};
+            const response = await instance.post(`/restoreAccessToChat`, {chatId, otherUserId}, {headers});
+            return response.data
+        } catch (error) {
+            console.error('Ошибка при получении сообщений:', error);
+        }
+    },
+
 }
 export const authAPI = {
     async login({email, password}) {

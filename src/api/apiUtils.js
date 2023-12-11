@@ -43,6 +43,7 @@ export async function refreshAuthToken() {
             const {newToken} = response.data;
             // Сохранить новый JWT-токен
             localStorage.setItem('token', newToken);
+            window.location.reload()
             return newToken
         }
         return null
@@ -61,7 +62,6 @@ export async function getAuthToken() {
     }
     const newToken = await refreshAuthToken();
     if (!newToken) {
-        console.log('Error getting newToken')
         await logoutAndRedirectToLogin();
         return null; // Возвращаем null, чтобы показать, что токен не был получен
     }

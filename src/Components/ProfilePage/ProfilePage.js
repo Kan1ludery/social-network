@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getOtherUserProfile, setError, setErrorMessage} from "../../actions/usersActions";
 import {useParams} from "react-router-dom";
 import Toast from "../../Utils/Toast/Toast";
+import Loading from "../../Utils/Loading/Loading";
 
 const ProfileInfo = lazy(() => import("./ProfileInfo/ProfileInfo"));
 
@@ -26,7 +27,7 @@ const ProfilePage = () => {
     return (<div className={styles.profile_page_container}>
             {error ? (<div>{error.response.data.error}</div>) : (<>
                     {isLoading ? (// Отображаем загрузочный экран или индикатор, пока данные загружаются
-                        <div>Loading...</div>) : (<ProfileInfo
+                        <Loading />) : (<ProfileInfo
                             user={user}
                             isCurrentUser={isCurrentUser}
                             otherUsername={otherUsername}

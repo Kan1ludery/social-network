@@ -19,7 +19,6 @@ const Logout = () => {
             localStorage.removeItem('expiresIn');
             dispatch(logoutUser());
             dispatch(setAuthStatus(false))
-
             // Перенаправляем пользователя на страницу входа или куда угодно еще
             navigate('/login');
             // Перезагружаем страницу
@@ -29,13 +28,20 @@ const Logout = () => {
         }
     }
 
-    return (
-        <div className={styles.container_logout}>
-            {token ? <button onClick={handleLogout} className={styles.button}>
-                    <span className={styles.initial_text}>You want out?</span>
-                    <span className={styles.hover_text}>Exit</span>
-                </button>
-                : ''}
+    return (<div className={styles.logoutPage}>
+            <div className={styles.logoutContainer}>
+                <div className={styles.icon}>
+                    {/* Ваша иконка здесь */}
+                </div>
+                <div className={styles.text}>
+                    <p>Are you sure you want to log out?</p>
+                </div>
+                {token && (
+                    <button onClick={handleLogout} className={styles.button}>
+                        Log out
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

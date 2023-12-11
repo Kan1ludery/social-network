@@ -77,37 +77,44 @@
 .container_dots:hover .dots {
     filter: brightness(0.4);
 }
-/* Добавленные стили для контейнера иконок */
+
 .iconsContainer {
     display: flex;
     align-items: center;
     position: relative;
 }
 .closeIcon {
-    width: 25px; /* Увеличиваем ширину иконки */
-    height: 25px; /* Увеличиваем высоту иконки */
+    width: 25px;
+    height: 25px;
     cursor: pointer;
     margin-right: 5px;
 }
-/* Стили для списка, который появляется при открытии меню */
 .menuList {
     list-style: none;
-    padding: 0;
-    margin: 0;
     position: absolute;
     top: 100%;
-    left: 0;
-    background-color: #fff; /* Задай фон по желанию */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавь тень для эффекта всплывания */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
+    margin-top: 10px;
 }
 
 /* Стили для пунктов меню */
 .menuList li {
     padding: 10px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+    transition: background-color 0.3s;
 }
 
 .menuList li:hover {
     background-color: #f0f0f0; /* Изменение цвета при наведении */
+}
+li.disabled {
+    color: grey; /* Сделать текст серым во время загрузки */
+    cursor: not-allowed; /* Изменить курсор на "not-allowed" */
+    pointer-events: none; /* Запретить клик на элементе */
+}
+
+.loading-icon {
+    margin-left: 5px; /* Добавить отступ между текстом и иконкой */
 }

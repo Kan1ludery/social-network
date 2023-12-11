@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {getUserProfile, setAuthStatus, setOnlineUsers} from "./actions/usersActions";
 import Loading from "./Utils/Loading/Loading";
 import {isAuthenticated, refreshAuthToken} from "./api/apiUtils";
+import io from "socket.io-client";
+import {fetchFriendRequests} from "./actions/messagesActions";
 
 const App = React.lazy(() => import('./App')); // Загружаем компонент App динамически
 const AppContainer = () => {
@@ -64,6 +66,21 @@ const AppContainer = () => {
             window.location.href = '/';
         }
     }, [token]);
+    useEffect(() => {
+        const socket = io('http://localhost:3001', {
+            auth: {
+                userId: userId // Передаём userId в объекте аутентификации
+            }
+        });
+
+        socket.on('friendAdded', (data) => {
+            dispatch(fetchFriendRequests());
+        });
+
+        return () => {
+            socket.disconnect(); // Отключение сокета при размонтировании компонента
+        };
+    }, [dispatch, userId]);
     return (
         <Suspense fallback={<Loading/>}>
             <App/>

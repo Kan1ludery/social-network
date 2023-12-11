@@ -1,29 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import styles from './Friends.module.css';
-import {usersAPI} from '../../api/api';
 import withAuth from '../../hoc/withAuth';
-import Loading from '../../Utils/Loading/Loading';
 import UserCard from "./UserCard/UserCard";
 import {useDispatch, useSelector} from "react-redux";
 import RequestsPage from "../Messages/RequestsPage/RequestsPage";
-import {fetchFriendRequests} from "../../actions/messagesActions";
+import Search from "../../Utils/SearchComponent/Search";
+import Loading from "../../Utils/Loading/Loading";
+import {updateFriends} from "../../actions/usersActions";
 
 const FriendsPage = () => {
     const dispatch = useDispatch()
-    const [data, setData] = useState([]);
-    const [count, setCount] = useState(0);
     const [activeTab, setActiveTab] = useState('friends');
+    const [searchValue, setSearchValue] = useState('');
+
     const {onlineUsers} = useSelector((state) => state.userReducer);
-    const {usersRequests} = useSelector((state) => state.messagesReducer)
-    console.log(usersRequests)
+    const {usersRequests, isSearchModalOpen, isLoading} = useSelector((state) => state.messagesReducer)
+    const {user, friendsList, friendsCount} = useSelector((state) => state.userReducer)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                dispatch(fetchFriendRequests());
-                const usersData = await usersAPI.getFriends();
-                const {friends, friendCount} = usersData;
-                setData(friends);
-                setCount(friendCount);
+                await dispatch(updateFriends())
             } catch (error) {
                 console.error('Error fetching data in component:', error);
             }
@@ -34,39 +30,40 @@ const FriendsPage = () => {
     const handleTabChange = (tabName) => {
         setActiveTab(tabName);
     };
-    return (
-        <div className={styles.friendsPage}>
-            <h1 className={styles.pageTitle}>Friends Page</h1>
-            <div className={styles.tabs}>
-                <button onClick={() => handleTabChange('friends')}>
-                    Friends
-                </button>
-                <button onClick={() => handleTabChange('friendRequests')}>
-                    Friend Requests {usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''}
-                </button>
-            </div>
-            {
-                activeTab === 'friends' ? (
-                    <>
-                        <p className={styles.friendCount}>Total friends: {count}</p>
-                        {data.length > 0 ? (
-                            <ul className={styles.friendList}>
-                                {data.map((user) => (
-                                    <li key={user._id} className={styles.friendItem}>
-                                        <UserCard user={user} isOnline={onlineUsers.includes(user._id)}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <Loading/>
-                        )}
-                    </>
-                ) : (
-                    <div><RequestsPage usersRequestList={usersRequests}/></div>
-                )
-            }
+    const handleSearchChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+    const filteredFriendsList = friendsList.filter(friend => {
+        return friend.username.toLowerCase().includes(searchValue.toLowerCase());
+    });
+
+    return (<div className={styles.friendsPage}>
+        <h1 className={styles.pageTitle}>Friends Page</h1>
+        <div className={styles.tabs}>
+            <button onClick={() => handleTabChange('friends')}
+                    className={activeTab === 'friends' ? styles.activeTab : styles.inactiveTab}>
+                Friends
+            </button>
+            <button onClick={() => handleTabChange('friendRequests')}
+                    className={activeTab === 'friendRequests' ? styles.activeTab : styles.inactiveTab}>
+                Friend Requests {usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''}
+            </button>
         </div>
-    );
+        {activeTab === 'friends' ? (<>
+            <div className={styles.container_info}>
+                <p className={styles.friendCount}>Total friends: {friendsCount}</p>
+                <Search className={styles.searchBar} placeholder={'Type username for search'}
+                        id={'searchBar'} type={'input'} onChange={handleSearchChange}/>
+            </div>
+            {isLoading ? (<Loading/>) : (friendsList.length > 0 ? (<ul className={styles.friendList}>
+                {filteredFriendsList.map((otherUser) => (<li key={otherUser._id} className={styles.friendItem}>
+                    <UserCard otherUser={otherUser} isOnline={onlineUsers.includes(user._id)} user={user}
+                              dispatch={dispatch}/>
+                </li>))}
+            </ul>) : (<div className={styles.noFriends}>There are no friends</div>))}
+
+        </>) : (<div><RequestsPage usersRequestList={usersRequests} isSearchModalOpen={isSearchModalOpen}/></div>)}
+    </div>);
 };
 
 export default withAuth(FriendsPage);

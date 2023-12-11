@@ -1,12 +1,11 @@
 import React from 'react';
-import {useSelector} from "react-redux";
 import RequestSearchForm from "./RequestSearchForm/RequestSearchForm";
 import FriendRequestsList from "./FriendRequestsList/FriendRequestsList";
 
 
-const RequestsPage = ({usersRequestList}) => {
+const RequestsPage = ({usersRequestList, isSearchModalOpen}) => {
+
     // Получаем данные из хранилища
-    const {isSearchModalOpen} = useSelector((state) => state.messagesReducer);
     return (
         <div>
             <RequestSearchForm isSearchModalOpen={isSearchModalOpen}/>

@@ -6,4 +6,5 @@
     flex-direction: column;
     height: 100vh;
     background: rgba(238, 238, 244, 0.45);
+    z-index: 999;
 }

@@ -6,7 +6,7 @@ const ChatInfo = ({chatData}) => {
     return (
         <div className={styles.container_info_chat}>
             <div className={styles.info_chat}>
-                <UserImage imageName={chatData.profileImage} alt="same_man" className={styles.image} />
+                <UserImage imageName={chatData.profileImage} alt="same_man" className={styles.image} clickable={true} to={`/profile/${chatData.username}`}/>
                 <div className={styles.username}>{chatData.username}</div>
                 <div>{chatData.currentStatus ? 'online' : 'offline'}</div>
             </div>

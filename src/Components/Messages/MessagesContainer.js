@@ -13,16 +13,16 @@ import {useDispatch, useSelector} from "react-redux";
 const MessagesContainer = (props) => {
     const [loadedMessageCount, setLoadedMessageCount] = useState(0);
     const [webSocket, setWebSocket] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
+    const [activeTab, setActiveTab] = useState('messages'); // Изначально активен раздел "messages"
     const messageContainer = useRef(null); // Создаем useRef для inputContainer
-
     const messagesPerPage = 25;
-
     const dispatch = useDispatch()
-
-
-    const {user} = useSelector((state) => state.userReducer)
+    const {user, onlineUsers} = useSelector((state) => state.userReducer)
     const {_id: userId} = user
-    const {chatList, usersRequests, isLoading, activeChat} = useSelector((state) => state.messagesReducer)
+    const {
+        chatList, usersRequests, isLoading, activeChat, isSearchModalOpen
+    } = useSelector((state) => state.messagesReducer)
     useEffect(() => {
         dispatch(fetchChatList())
         dispatch(fetchFriendRequests());
@@ -35,21 +35,17 @@ const MessagesContainer = (props) => {
                         const chatIds = chatList.map(chat => chat.chatId).join('/');
                         const socket = new WebSocket(`ws://localhost:8080/${chatIds}/${userId}`);
                         socket.onopen = () => {
-                            console.log('WebSocket connection opened.');
                             setWebSocket(socket);
                         };
                         socket.onmessage = (event) => {
                             const messageData = JSON.parse(event.data);
-                            console.log(messageData)
                             switch (messageData.type) {
                                 case 'chatMessage':
                                     const {chatId, ...rest} = messageData;
-                                    console.log(`Получено сообщение от сервера: ${rest.text}`);
                                     dispatch(addSentMessage(rest));
                                     dispatch(updateLastMessage(chatId, rest));
                                     break;
                                 case 'chatCreated':
-                                    console.log(`Чат с ID ${messageData.chatId} был успешно создан.`);
                                     dispatch(fetchChatList())
                                     break;
                                 default:
@@ -57,7 +53,6 @@ const MessagesContainer = (props) => {
                             }
                         };
                         socket.onclose = () => {
-                            console.log('WebSocket connection closed.');
                             setWebSocket(null);
                         };
                     }
@@ -83,13 +78,11 @@ const MessagesContainer = (props) => {
             if (current) {
                 const isAtBottom = current.scrollHeight + current.scrollTop === current.clientHeight;
                 if (isAtBottom) {
-                    console.log('Дошли до нижнего конца inputContainer.');
                     // Подгрузка новых сообщений здесь
                     const from = loadedMessageCount + 1;
                     const to = loadedMessageCount + messagesPerPage;
                     dispatch(scrollChatThunk(activeChat.chatId, from, to));
                     setLoadedMessageCount(loadedMessageCount + messagesPerPage);
-                    console.log(loadedMessageCount)
                 }
             }
         }
@@ -103,7 +96,6 @@ const MessagesContainer = (props) => {
             }
         };
     }, [dispatch, loadedMessageCount, activeChat]);
-
     const handleChatClick = async (chatData, status, targetId = null) => {
         try {
             dispatch(getChatInfo(chatData, 0, messagesPerPage, status));
@@ -112,11 +104,22 @@ const MessagesContainer = (props) => {
             console.error('Ошибка при получении информации о чате:', error);
         }
     };
-    return (
-        <Messages chatList={chatList} usersRequests={usersRequests} activeChat={activeChat}
-                  messageContainer={messageContainer} webSocket={webSocket} isLoading={isLoading}
-                  handleChatClick={handleChatClick}/>
-    );
+    const handleSearchChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
+    const filteredChatList = chatList.filter(chat => {
+        return chat.username.toLowerCase().includes(searchValue.toLowerCase());
+    });
+    // Функция для открытия оверлея
+    const handleTabClick = (tabName) => {
+        setActiveTab(tabName);
+    };
+    return (<Messages filteredChatList={filteredChatList} usersRequests={usersRequests} activeChat={activeChat}
+                      messageContainer={messageContainer} webSocket={webSocket} isLoading={isLoading}
+                      handleChatClick={handleChatClick} dispatch={dispatch} isSearchModalOpen={isSearchModalOpen}
+                      onlineUsers={onlineUsers} activeTab={activeTab} handleTabClick={handleTabClick}
+                      handleSearchChange={handleSearchChange}/>);
 };
 
 export default MessagesContainer;

@@ -30,7 +30,6 @@ const SocialIcon = ({type, isActive, isCurrentUser, profile}) => {
 
     const handleInputChange = (e) => {
         const newText = e.target.value;
-        console.log(newText)
         dispatch(setSocialLink(type, newText));
     };
     const handleInputKeyDown = (e) => {

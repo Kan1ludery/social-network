@@ -1,36 +1,26 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import styles from './Test.module.css'; // Подключаем файл стилей
+import soundFile from './bananchiki.mp3';
+import DevelopmentWarning from "../DevelopmentWarning/DevelopmentWarning"; // Импортируем звуковой файл
 
-const YourComponent = () => {
-    // useEffect(() => {
-    //     const socket = io('http://localhost:3001'); // Подключение к серверу Socket.IO
-    //
-    //     // Обработчики событий WebSocket
-    //     socket.on('connect', () => {
-    //         console.log('Connected to server');
-    //     });
-    //
-    //     socket.on('message', (data) => {
-    //         console.log('Received message:', data);
-    //         // Делайте что-то с полученными данными
-    //     });
-    //     socket.on('emailVerified', (data) => {
-    //         // Обработка события успешного подтверждения почты
-    //         // Например, обновление состояния или выполнение других действий на клиенте
-    //         console.log('Email successfully verified for user:', data.userId);
-    //         // Здесь можно обновить состояние компонента или выполнить другие действия
-    //     });
-    //     // Отправка сообщения на сервер
-    //     socket.emit('clientMessage', 'Hello Server!');
-    //
-    //     return () => {
-    //         // Отключение соединения при размонтировании компонента
-    //         socket.disconnect();
-    //     };
-    // }, []);
+const Test = () => {
+    const audioRef = useRef(null);
+
+    const playSound = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
 
     return (
-        <div>выдввдв</div>
+        <div className={styles.container}>
+            <DevelopmentWarning />
+            <div className={styles.container_secret}>
+                <img src="/assets/img/nonExistingPage/monke.png" alt="" className={styles.img} onClick={playSound}/>
+                <audio ref={audioRef} src={soundFile} />
+            </div>
+        </div>
     );
 };
 
-export default YourComponent;
+export default Test;
