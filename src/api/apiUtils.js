@@ -2,7 +2,8 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import getUserInfoFromToken from "../Utils/Functions/getUserInfoFromToken";
-import {baseServerURL} from "./api";
+
+const baseServerURL = 'https://social-network-api.up.railway.app/'
 
 const instance = axios.create({
     baseURL: `${baseServerURL}/api`, // URL сервера API
