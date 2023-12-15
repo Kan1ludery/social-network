@@ -33,7 +33,7 @@ const MessagesContainer = (props) => {
                 if (!webSocket) {
                     if (userId) {
                         const chatIds = chatList.map(chat => chat.chatId).join('/');
-                        const socket = new WebSocket(`ws://localhost:8080/${chatIds}/${userId}`);
+                        const socket = new WebSocket(`ws://social-network-api.up.railway.app:8080/${chatIds}/${userId}`);
                         socket.onopen = () => {
                             setWebSocket(socket);
                         };

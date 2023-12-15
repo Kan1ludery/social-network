@@ -33,7 +33,7 @@ const AppContainer = () => {
     useEffect(() => {
         if (!webSocket) {
             if (userId) {
-                const socket = new WebSocket(`ws://localhost:8081`);
+                const socket = new WebSocket(`ws://social-network-api.up.railway.app:8081`);
                 socket.onopen = () => {
                     setWebSocket(socket);
                     const token = localStorage.getItem('token')
@@ -67,7 +67,7 @@ const AppContainer = () => {
         }
     }, [token]);
     useEffect(() => {
-        const socket = io('http://localhost:3001', {
+        const socket = io('https://social-network-api.up.railway.app/', {
             auth: {
                 userId: userId // Передаём userId в объекте аутентификации
             }

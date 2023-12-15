@@ -2,8 +2,9 @@
 import axios from "axios";
 import {getAuthToken} from "./apiUtils";
 
+export const baseServerURL = 'https://social-network-api.up.railway.app/'
 const instance = axios.create({
-    baseURL: "https://social-network-api.up.railway.app/api", // URL сервера API
+    baseURL: `${baseServerURL}/api`, // URL сервера API
     withCredentials: true,
 });
 const createAuthHeaderConfig = async () => {

@@ -4,6 +4,7 @@ import styles from './EmailConfirmation.module.css';
 import io from 'socket.io-client';
 import {resendEmailVerification, updateToken} from "../../../actions/usersActions";
 import {useDispatch, useSelector} from "react-redux";
+import {baseServerURL} from "../../../api/api";
 
 const EmailConfirmation = () => {
     const dispatch = useDispatch(); // Инициализация хука useDispatch
@@ -11,7 +12,7 @@ const EmailConfirmation = () => {
     const [loading, setLoading] = useState(false); // Состояние для отслеживания загрузки
     const {userId} = getUserInfoFromToken();
     useEffect(() => {
-        const socket = io('http://localhost:3001');
+        const socket = io(baseServerURL);
 
         socket.on('emailVerified', (data) => {
             const {newToken} = data

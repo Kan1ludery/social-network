@@ -2,9 +2,10 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import getUserInfoFromToken from "../Utils/Functions/getUserInfoFromToken";
+import {baseServerURL} from "./api";
 
 const instance = axios.create({
-    baseURL: "http://localhost:3001/api", // URL сервера API
+    baseURL: `${baseServerURL}/api`, // URL сервера API
     withCredentials: true,
 });
 
