@@ -6,17 +6,23 @@ import {messagesAPI} from "../../../../api/api";
 import styles from './RequestSearchForm.module.css'
 import ModalOverlay from "../../../../Utils/ModalOverlay/ModalOverlay";
 import Toast from "../../../../Utils/Toast/Toast";
-import {setErrorMessage} from "../../../../actions/usersActions";
+import {setConfirmationMessage, setErrorMessage} from "../../../../actions/usersActions";
 
-const RequestSearchForm = ({ isSearchModalOpen }) => {
+const RequestSearchForm = ({isSearchModalOpen}) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false)
-    const {errorMessage} = useSelector((state) => state.userReducer);
+    const {errorMessage, confirmationMessage} = useSelector((state) => state.userReducer);
     const handleAddFriendClick = async (friendId) => {
+        dispatch(setErrorMessage(null))
         try {
-            return messagesAPI.addFriendRequest(friendId);
+            setIsLoading(true)
+            await messagesAPI.addFriendRequest(friendId);
+            dispatch(setConfirmationMessage('Вы отправили запрос в дружбу'))
         } catch (error) {
             console.error(error);
+            dispatch(setErrorMessage(error.response.data.error))
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -32,8 +38,7 @@ const RequestSearchForm = ({ isSearchModalOpen }) => {
             } catch (error) {
                 console.error(error);
                 dispatch(setErrorMessage(error.response.data.error))
-            }
-            finally {
+            } finally {
                 setIsLoading(false)
             }
         }
@@ -45,8 +50,7 @@ const RequestSearchForm = ({ isSearchModalOpen }) => {
             dispatch(setErrorMessage(null))
         };
     }, [dispatch]);
-    return (
-        <div>
+    return (<div>
             <div className={styles.container_button}>
                 <button
                     className={styles.button_search}
@@ -73,12 +77,11 @@ const RequestSearchForm = ({ isSearchModalOpen }) => {
                         </button>
                     </form>
                     {/* Отображение результатов поиска внутри модального окна */}
-                    <SearchResults onAddFriendClick={handleAddFriendClick} />
-                </ModalOverlay>
-            )}
+                    <SearchResults onAddFriendClick={handleAddFriendClick}/>
+                </ModalOverlay>)}
+            {confirmationMessage && <Toast message={confirmationMessage} type={'info'} duration={5000} /> }
             {errorMessage && <Toast message={errorMessage} type={'error'} duration={10000}/>}
-        </div>
-    );
+        </div>);
 };
 
 export default RequestSearchForm;

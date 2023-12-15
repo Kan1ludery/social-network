@@ -3,7 +3,7 @@ import axios from "axios";
 import {getAuthToken} from "./apiUtils";
 
 const instance = axios.create({
-    baseURL: "http://localhost:3001/api", // URL сервера API
+    baseURL: "https://social-network-api.up.railway.app/api", // URL сервера API
     withCredentials: true,
 });
 const createAuthHeaderConfig = async () => {
@@ -142,6 +142,7 @@ export const messagesAPI = {
             return response.data
         } catch (error) {
             console.error('Ошибка при создании заявки пользователем в друзья:', error);
+            throw error
         }
     },
     async getFriendRequests(){

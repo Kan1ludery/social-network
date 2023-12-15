@@ -12,7 +12,7 @@ const SearchResults = ({ onAddFriendClick }) => {
                     {searchResults.map((item) => (
                         <li key={item._id}>
                             <div className={styles.containerUser}>
-                                <UserImage imageName={item.profileImage} className={styles.image} alt={'search_image'} />
+                                <UserImage imageName={item.profileImage} className={styles.image} alt={'search_image'}/>
                                 <p className={styles.username}>{item.username}</p>
                                 <button onClick={() => onAddFriendClick(item._id)} className={styles.button}>Add as a friend</button>
                             </div>
