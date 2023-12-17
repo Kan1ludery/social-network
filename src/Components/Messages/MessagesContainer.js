@@ -1,18 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Messages from "./Messages";
 import {
-    addSentMessage,
-    fetchChatList,
-    fetchFriendRequests,
-    getChatInfo,
-    scrollChatThunk,
-    updateLastMessage
+    addSentMessage, fetchChatList, fetchFriendRequests, getChatInfo, scrollChatThunk, updateLastMessage
 } from "../../actions/messagesActions";
 import {useDispatch, useSelector} from "react-redux";
+import io from "socket.io-client";
+import {baseServerURL} from "../../api/api";
 
 const MessagesContainer = (props) => {
     const [loadedMessageCount, setLoadedMessageCount] = useState(0);
-    const [webSocket, setWebSocket] = useState(null);
+    const [socketIo, setSocketIo] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [activeTab, setActiveTab] = useState('messages'); // Изначально активен раздел "messages"
     const messageContainer = useRef(null); // Создаем useRef для inputContainer
@@ -28,48 +25,40 @@ const MessagesContainer = (props) => {
         dispatch(fetchFriendRequests());
     }, [dispatch]);
     useEffect(() => {
-        const connectWebSocket = async () => {
-            if (chatList.length > 0) {
-                if (!webSocket) {
-                    if (userId) {
-                        const chatIds = chatList.map(chat => chat.chatId).join('/');
-                        const socket = new WebSocket(`ws://social-network-api.up.railway.app:8080/${chatIds}/${userId}`);
-                        socket.onopen = () => {
-                            setWebSocket(socket);
-                        };
-                        socket.onmessage = (event) => {
-                            const messageData = JSON.parse(event.data);
-                            switch (messageData.type) {
-                                case 'chatMessage':
-                                    const {chatId, ...rest} = messageData;
-                                    dispatch(addSentMessage(rest));
-                                    dispatch(updateLastMessage(chatId, rest));
-                                    break;
-                                case 'chatCreated':
-                                    dispatch(fetchChatList())
-                                    break;
-                                default:
-                                    break;
-                            }
-                        };
-                        socket.onclose = () => {
-                            setWebSocket(null);
-                        };
-                    }
+        if (!socketIo && chatList.length > 0 && userId) {
+            const chatIds = chatList.map(chat => chat.chatId);
+            const socket = io(`${baseServerURL}/socketIO3`, {
+                auth: {
+                    chatIds: chatIds,
+                    userId: userId
                 }
-            }
+            });
+
+            socket.on('connect', () => {
+                console.log('connected THIRD SOCKET')
+                setSocketIo(socket); // Сохраняем сокет в состоянии
+            });
+            console.log(socketIo)
+            socket.on('chatMessage', (messageData) => {
+                const {chatId, ...rest} = messageData;
+                dispatch(addSentMessage(rest));
+                dispatch(updateLastMessage(chatId, rest));
+            });
+
+            socket.on('chatCreated', () => {
+                dispatch(fetchChatList());
+            });
+            socket.on('disconnect', () => {
+                setSocketIo(null)
+            })
         }
-        connectWebSocket()
-    }, [dispatch, webSocket, chatList, userId]);
-    useEffect(() => {
         return () => {
-            // Функция выполнится при размонтировании компонента
-            if (webSocket) {
-                setWebSocket(null)
-                webSocket.close(); // Закрываем сокет
+            if (socketIo) {
+                socketIo.disconnect();
             }
         };
-    }, [webSocket])
+    }, [dispatch, chatList, userId, socketIo]);
+
     useEffect(() => {
         // Получаем ссылку на элемент inputContainer через useRef
         const current = messageContainer.current;
@@ -116,7 +105,7 @@ const MessagesContainer = (props) => {
         setActiveTab(tabName);
     };
     return (<Messages filteredChatList={filteredChatList} usersRequests={usersRequests} activeChat={activeChat}
-                      messageContainer={messageContainer} webSocket={webSocket} isLoading={isLoading}
+                      messageContainer={messageContainer} webSocket={socketIo} isLoading={isLoading}
                       handleChatClick={handleChatClick} dispatch={dispatch} isSearchModalOpen={isSearchModalOpen}
                       onlineUsers={onlineUsers} activeTab={activeTab} handleTabClick={handleTabClick}
                       handleSearchChange={handleSearchChange}/>);

@@ -1,17 +1,17 @@
-import React, {Suspense, useEffect, useState} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getUserProfile, setAuthStatus, setOnlineUsers} from "./actions/usersActions";
 import Loading from "./Utils/Loading/Loading";
 import {isAuthenticated, refreshAuthToken} from "./api/apiUtils";
 import io from "socket.io-client";
 import {fetchFriendRequests} from "./actions/messagesActions";
+import {baseServerURL} from "./api/api";
 
 const App = React.lazy(() => import('./App')); // Загружаем компонент App динамически
 const AppContainer = () => {
     // Получение информации о пользователе
     const dispatch = useDispatch();
     const {user: {_id: userId}, token} = useSelector((state) => state.userReducer)
-    const [webSocket, setWebSocket] = useState(null)
     useEffect(() => {
         const fetchData = async () => {
             const isAuth = isAuthenticated();
@@ -29,58 +29,50 @@ const AppContainer = () => {
 
         fetchData();
     }, [dispatch]);
+    useEffect(() => {
+        const socket = io(`${baseServerURL}/socketIO`, {
+            auth: {
+                userId: userId // Передаём userId в объекте аутентификации
+            }
+        });
+        socket.on('connect', () => {
+            console.log('Socket connected successfully!');
+            // Здесь можно выполнить дополнительные действия при успешном подключении
+        });
 
-    useEffect(() => {
-        if (!webSocket) {
-            if (userId) {
-                const socket = new WebSocket(`ws://social-network-api.up.railway.app:8081`);
-                socket.onopen = () => {
-                    setWebSocket(socket);
-                    const token = localStorage.getItem('token')
-                    socket.send(JSON.stringify({ type: 'socketStatus', token }));
-                };
-                socket.onmessage = (event) => {
-                    const data = JSON.parse(event.data)
-                    if (data.type === 'onlineUsers') {
-                        dispatch(setOnlineUsers(data.data))
-                    }
-                };
-                socket.onclose = () => {
-                    setWebSocket(null);
-                };
-            }
-        }
-    }, [dispatch, webSocket, userId]);
-    useEffect(() => {
+        socket.on('friendAdded', (data) => {
+            dispatch(fetchFriendRequests());
+        });
         return () => {
-            // Функция выполнится при размонтировании компонента
-            if (webSocket) {
-                setWebSocket(null)
-                webSocket.close(); // Закрываем сокет
-            }
+            socket.disconnect(); // Отключение сокета при размонтировании компонента
         };
-    }, [webSocket])
+    }, [dispatch, userId]);
+    useEffect(() => {
+        if (userId) {
+            const socket2 = io(`${baseServerURL}/socketIO2`);
+            // Обработка успешного соединения
+            socket2.on('connect', () => {
+                console.log('Socket connected successfully2!');
+                const token = localStorage.getItem('token');
+                socket2.emit('socketStatus', { token });
+            });
+
+            socket2.on('onlineUsers', (data) => {
+                dispatch(setOnlineUsers(data));
+            });
+
+            return () => {
+                socket2.disconnect();
+            };
+        }
+    }, [dispatch, userId]);
+
     useEffect(() => {
         // Проверяем, что предыдущий токен был пустым, а новый токен не пустой
         if (token !== '' && token !== null) {
             window.location.href = '/';
         }
     }, [token]);
-    useEffect(() => {
-        const socket = io('https://social-network-api.up.railway.app/', {
-            auth: {
-                userId: userId // Передаём userId в объекте аутентификации
-            }
-        });
-
-        socket.on('friendAdded', (data) => {
-            dispatch(fetchFriendRequests());
-        });
-
-        return () => {
-            socket.disconnect(); // Отключение сокета при размонтировании компонента
-        };
-    }, [dispatch, userId]);
     return (
         <Suspense fallback={<Loading/>}>
             <App/>
