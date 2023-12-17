@@ -35,10 +35,8 @@ const MessagesContainer = (props) => {
             });
 
             socket.on('connect', () => {
-                console.log('connected THIRD SOCKET')
                 setSocketIo(socket); // Сохраняем сокет в состоянии
             });
-            console.log(socketIo)
             socket.on('chatMessage', (messageData) => {
                 const {chatId, ...rest} = messageData;
                 dispatch(addSentMessage(rest));

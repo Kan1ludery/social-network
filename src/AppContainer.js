@@ -36,8 +36,7 @@ const AppContainer = () => {
             }
         });
         socket.on('connect', () => {
-            console.log('Socket connected successfully!');
-            // Здесь можно выполнить дополнительные действия при успешном подключении
+
         });
 
         socket.on('friendAdded', (data) => {
@@ -52,7 +51,6 @@ const AppContainer = () => {
             const socket2 = io(`${baseServerURL}/socketIO2`);
             // Обработка успешного соединения
             socket2.on('connect', () => {
-                console.log('Socket connected successfully2!');
                 const token = localStorage.getItem('token');
                 socket2.emit('socketStatus', { token });
             });

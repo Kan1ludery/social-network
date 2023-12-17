@@ -17,7 +17,6 @@ const MessagesForm = ({chatData, webSocket}) => {
                         chatId: chatId,
                         message: values.message,
                     };
-                    console.log(webSocket)
                     webSocket.emit('message', messageData);
                 }
                 resetForm();
