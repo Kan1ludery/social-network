@@ -84,7 +84,7 @@ export const setFriends = (friends) => ({
     type: SET_FRIENDS,
     payload: friends,
 });
-export const setRequestsCount = (count) => ({
+export const setFriendsCount = (count) => ({
     type: SET_FRIENDS_COUNT,
     payload: count,
 });
@@ -192,7 +192,7 @@ export const updateFriends = () => async (dispatch) => {
         const usersData = await usersAPI.getFriends();
         const {friends, friendCount} = usersData;
         dispatch(setFriends(friends))
-        dispatch(setRequestsCount(friendCount))
+        dispatch(setFriendsCount(friendCount))
     } catch (error) {
         console.error('Error fetching data in component: Friends Page', error);
     }

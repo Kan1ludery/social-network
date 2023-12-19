@@ -25,12 +25,10 @@ const FriendRequestsList = ({usersRequestList}) => {
                         <li key={request._id}>
                             <div className={styles.requestInfo}>
                                 <UserImage imageName={request.profile.profileImage} className={styles.image} alt={'req_img'} clickable={true} to={`/profile/${request.username}`}/>
-                                <div>
-                                    <span className={styles.center}>От: {request.username}</span>
-                                    <div className={styles.requestButtons}>
-                                        <button className={styles.acceptButton} onClick={() => accept(request._id)}>Принять</button>
-                                        <button className={styles.rejectButton} onClick={() => reject(request._id)}>Отказаться</button>
-                                    </div>
+                                <span className={styles.center}>{request.username}</span>
+                                <div className={styles.requestButtons}>
+                                    <button className={styles.acceptButton} onClick={() => accept(request._id)}></button>
+                                    <button className={styles.rejectButton} onClick={() => reject(request._id)}></button>
                                 </div>
                             </div>
                         </li>

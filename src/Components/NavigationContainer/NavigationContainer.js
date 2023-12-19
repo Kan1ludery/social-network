@@ -4,9 +4,13 @@ import Profile from "./Profile/Profile";
 import Navbar from "./Navbar/Navbar";
 import {useDispatch, useSelector} from "react-redux";
 import {saveCompressionState, setActualCompress} from "../../reducers/navigationReducer";
+import {useNavigate} from "react-router-dom";
+import getUserInfoFromToken from "../../Utils/Functions/getUserInfoFromToken";
 
 const NavigationContainer = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { emailVerified } = getUserInfoFromToken();
     const {isCompressed} = useSelector(state => state.navigationReducer);
     const {user, isAuth} = useSelector((state) => state.userReducer);
     const userImageFileName = useSelector((state) => state.userReducer.user.profile.profileImage);
@@ -24,7 +28,7 @@ const NavigationContainer = (props) => {
     return (
         <div className={styles.container} style={containerStyle}>
             <Profile isCompressed={isCompressed} setIsCompressed={setIsCompressed} user={user} isAuth={isAuth} userImageFileName={userImageFileName}/>
-            <Navbar isCompressed={isCompressed} user={user} isAuth={isAuth}/>
+            <Navbar isCompressed={isCompressed} user={user} isAuth={isAuth} dispatch={dispatch} navigate={navigate} emailVerified={emailVerified}/>
         </div>
     );
 };

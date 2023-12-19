@@ -6,7 +6,6 @@ import {isAuthenticated} from "../api/apiUtils";
 const withEmailConfirmation = (WrappedComponent) => {
     return (props) => {
         const navigate = useNavigate();
-
         useEffect(() => {
             const isAuth = isAuthenticated();
             if (isAuth) {

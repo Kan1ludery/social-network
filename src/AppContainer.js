@@ -4,7 +4,7 @@ import {getUserProfile, setAuthStatus, setOnlineUsers} from "./actions/usersActi
 import Loading from "./Utils/Loading/Loading";
 import {isAuthenticated, refreshAuthToken} from "./api/apiUtils";
 import io from "socket.io-client";
-import {fetchFriendRequests} from "./actions/messagesActions";
+import {fetchChatList, fetchFriendRequests} from "./actions/messagesActions";
 import {baseServerURL} from "./api/api";
 
 const App = React.lazy(() => import('./App')); // Загружаем компонент App динамически
@@ -26,11 +26,10 @@ const AppContainer = () => {
                 }
             }
         };
-
         fetchData();
     }, [dispatch]);
     useEffect(() => {
-        const socket = io(`${baseServerURL}/socketIO`, {
+        const socket = io(`${baseServerURL}/socketIO1`, {
             auth: {
                 userId: userId // Передаём userId в объекте аутентификации
             }
@@ -42,6 +41,10 @@ const AppContainer = () => {
         socket.on('friendAdded', (data) => {
             dispatch(fetchFriendRequests());
         });
+
+        socket.on('chatAdded', (data) => {
+            dispatch(fetchChatList())
+        });
         return () => {
             socket.disconnect(); // Отключение сокета при размонтировании компонента
         };
@@ -52,7 +55,7 @@ const AppContainer = () => {
             // Обработка успешного соединения
             socket2.on('connect', () => {
                 const token = localStorage.getItem('token');
-                socket2.emit('socketStatus', { token });
+                socket2.emit('socketStatus', {token});
             });
 
             socket2.on('onlineUsers', (data) => {

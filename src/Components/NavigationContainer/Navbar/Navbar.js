@@ -1,11 +1,13 @@
 // Navbar component
 import React from 'react';
 import styles from './Navbar.module.css';
+import buttonStyles from '../Navbutton/Navbutton.module.css'
 import Navbutton from "../Navbutton/Navbutton";
 import withAuth from "../../../hoc/withAuth";
-import withEmailConfirmation from "../../../hoc/withEmailConfirmation";
+import handleLogout from "../../Auth/Logout/handleLogout";
 
-const Navbar = ({isCompressed, user, isAuth}) => {
+const Navbar = ({isCompressed, user, isAuth, dispatch, navigate, emailVerified}) => {
+
     const {username} = user
     return (
         <div className={styles.container_navbar}>
@@ -18,12 +20,20 @@ const Navbar = ({isCompressed, user, isAuth}) => {
             {isAuth
                 ? <>
                     <Navbutton pathTo={"/test"} iUrl="/assets/icons/navbar/settings.svg" text="Settings" isCompressed={isCompressed}/>
-                    <Navbutton pathTo={"/logout"} iUrl="/assets/icons/navbar/logout.svg" text="Logout" isCompressed={isCompressed} />
+                    {emailVerified
+                        ? <Navbutton pathTo={"/logout"} iUrl="/assets/icons/navbar/logout.svg" text="Logout" isCompressed={isCompressed} />
+                        : <button onClick={()=> handleLogout(navigate, dispatch)} className={buttonStyles.container_navbutton}>
+                            <div className={buttonStyles.block}>
+                                <img src={'/assets/icons/navbar/logout.svg'} alt="navbutton" className={buttonStyles.block_image}/>
+                            </div>
+                            <div className={`${buttonStyles.text} ${isCompressed ? buttonStyles.textCompressed : buttonStyles.textExpanded}`}>Logout</div>
+                        </button>
+                    }
                 </>
-                : ''
+                : null
             }
         </div>
     );
 };
 
-export default withAuth(withEmailConfirmation(Navbar));
+export default withAuth(Navbar);

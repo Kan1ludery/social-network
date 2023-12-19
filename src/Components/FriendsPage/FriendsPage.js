@@ -10,12 +10,11 @@ import {updateFriends} from "../../actions/usersActions";
 
 const FriendsPage = () => {
     const dispatch = useDispatch()
-    const [activeTab, setActiveTab] = useState('friends');
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || 'friends');
     const [searchValue, setSearchValue] = useState('');
 
-    const {onlineUsers} = useSelector((state) => state.userReducer);
     const {usersRequests, isSearchModalOpen, isLoading} = useSelector((state) => state.messagesReducer)
-    const {user, friendsList, friendsCount} = useSelector((state) => state.userReducer)
+    const {user, friendsList, friendsCount, onlineUsers} = useSelector((state) => state.userReducer)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,7 +25,9 @@ const FriendsPage = () => {
         };
         fetchData();
     }, [dispatch, activeTab]);
-
+    useEffect(() => {
+        localStorage.setItem('activeTab', activeTab);
+    }, [activeTab]);
     const handleTabChange = (tabName) => {
         setActiveTab(tabName);
     };
@@ -57,7 +58,7 @@ const FriendsPage = () => {
             </div>
             {isLoading ? (<Loading/>) : (friendsList.length > 0 ? (<ul className={styles.friendList}>
                 {filteredFriendsList.map((otherUser) => (<li key={otherUser._id} className={styles.friendItem}>
-                    <UserCard otherUser={otherUser} isOnline={onlineUsers.includes(user._id)} user={user}
+                    <UserCard otherUser={otherUser} isOnline={onlineUsers.includes(otherUser._id)} user={user}
                               dispatch={dispatch}/>
                 </li>))}
             </ul>) : (<div className={styles.noFriends}>There are no friends</div>))}

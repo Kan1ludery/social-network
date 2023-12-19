@@ -2,8 +2,8 @@
 import axios from "axios";
 import {getAuthToken} from "./apiUtils";
 
-export const baseServerURL = 'https://yomessage-api.ru'
-// export const baseServerURL = 'http://localhost:5050'
+// export const baseServerURL = 'https://yomessage-api.ru'
+export const baseServerURL = 'http://localhost:5050'
 const instance = axios.create({
     baseURL: `${baseServerURL}/api`, // URL сервера API
     withCredentials: true,

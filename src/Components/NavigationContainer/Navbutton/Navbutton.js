@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "./Navbutton.module.css";
 import {NavLink, useLocation} from "react-router-dom";
+import withEmailConfirmation from "../../../hoc/withEmailConfirmation";
 
 const Navbutton = ({pathTo, iUrl, text, isCompressed}) => {
     const location = useLocation()
@@ -24,4 +25,4 @@ const Navbutton = ({pathTo, iUrl, text, isCompressed}) => {
     );
 };
 
-export default Navbutton;
+export default withEmailConfirmation(Navbutton);

@@ -12,7 +12,7 @@ const EmailConfirmation = () => {
     const [loading, setLoading] = useState(false); // Состояние для отслеживания загрузки
     const {userId} = getUserInfoFromToken();
     useEffect(() => {
-        const socket = io(baseServerURL);
+        const socket = io(`${baseServerURL}/socketIO1`);
 
         socket.on('emailVerified', (data) => {
             const {newToken} = data

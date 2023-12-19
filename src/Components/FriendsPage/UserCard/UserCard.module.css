@@ -1,5 +1,7 @@
 /* UserCard.module.css */
-
+.relative {
+    position: relative;
+}
 .userCard {
     display: flex;
     align-items: center;

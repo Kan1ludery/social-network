@@ -24,19 +24,36 @@
     object-fit: cover;
     border-radius: 100%;
 }
+.requestButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .acceptButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+    transition: .2s filter;
+    background: url("/public/assets/icons/friendsPage/yes.svg") no-repeat;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     margin-right: 10px;
 }
-
+.acceptButton:hover {
+    filter: brightness(1.2);
+}
+.acceptButton:active {
+    filter: brightness(0.8); /* Измените параметры для нужного эффекта */
+}
 .rejectButton {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+    background: url("/public/assets/icons/friendsPage/no.svg") no-repeat;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
+    margin-right: 30px;
+}
+.rejectButton:hover {
+    filter: brightness(1.2);
+}
+
+.rejectButton:active {
+    filter: brightness(0.8);
 }

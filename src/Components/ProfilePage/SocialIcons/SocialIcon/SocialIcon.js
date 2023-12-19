@@ -56,7 +56,7 @@ const SocialIcon = ({type, isActive, isCurrentUser, profile}) => {
                     />
                 </button>
             ) : (
-                <NavLink to={`${inputValue}`} className={styles.button} target="_blank">
+                <NavLink to={`${inputValue}`} className={styles.button}>
                     <img
                         className={styles.icon}
                         src={`/assets/icons/socialLinks/${type}${isActive ? 'Color' : 'Blind'}.svg`}
