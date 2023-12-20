@@ -46,7 +46,7 @@ const CreateChat = ({onlineUsers, isSearchModalOpen}) => {
                 <button
                     className={activeTab === 'random' ? `${styles.tab} ${styles.active}` : styles.tab}
                     onClick={() => openTab('random')}>
-                    Users with no chats
+                    Users you can chat
                 </button>
                 <button
                     className={activeTab === 'chats' ? `${styles.tab} ${styles.active}` : styles.tab}

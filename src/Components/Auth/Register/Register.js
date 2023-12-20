@@ -31,7 +31,9 @@ const Register = () => {
         if (!values.username) {
             errors.username = requiredErrorMessage;
         }
-
+        if (values.username.length > 15) {
+            errors.username = 'The username is too long';
+        }
         if (!values.email) {
             errors.email = requiredErrorMessage;
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -47,7 +49,9 @@ const Register = () => {
         if (values.password !== values.confirmPassword) {
             errors.confirmPassword = `The passwords don't match`;
         }
-
+        if (!values.confirmPassword) {
+            errors.confirmPassword = requiredErrorMessage;
+        }
         return errors;
     }
 

@@ -1,16 +1,18 @@
 import React from 'react';
 import {Field, Form, Formik} from "formik";
 import styles from "./MessagesForm.module.css";
-import {useSelector} from "react-redux";
+import {setErrorMessage} from "../../../actions/usersActions";
+import useCurrentUser from "../../../customHooks/useCurrentUser";
 
-const MessagesForm = ({chatData, webSocket}) => {
+const MessagesForm = ({chatData, webSocket, dispatch}) => {
     const {chatId, targetId} = chatData
-    const {_id: currentUserId} = useSelector((state) => state.userReducer.user);
+    const {currentUserId} = useCurrentUser()
     return (
         <Formik
             initialValues={{message: ''}}
             onSubmit={(values, {resetForm}) => {
-                if (webSocket && values.message) {
+                const trimmedMessage = values.message.trim();
+                if (webSocket && trimmedMessage) {
                     const messageData = {
                         targetId: targetId,
                         senderId: currentUserId,
@@ -20,6 +22,7 @@ const MessagesForm = ({chatData, webSocket}) => {
                     webSocket.emit('message', messageData);
                 }
                 resetForm();
+                dispatch(setErrorMessage(null))
             }}>
             <Form>
                 <div className={styles.container_Field}>
@@ -29,6 +32,7 @@ const MessagesForm = ({chatData, webSocket}) => {
                         placeholder="Type a message..."
                         autoComplete="off"
                         className={styles.inputField}
+                        maxLength={250}
                     />
                     <button type="submit" className={styles.sendMessageButton}></button>
                 </div>

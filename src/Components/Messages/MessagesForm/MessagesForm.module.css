@@ -14,9 +14,16 @@
     background: rgba(217, 217, 217, 0.10);
 }
 .sendMessageButton {
+    transition: .3s transform;
     position: absolute;
     width: 24px;
     height: 24px;
     background: url("/public/assets/icons/messages/send.svg") no-repeat center center;
     margin-left: 20px;
+}
+.sendMessageButton:hover {
+    transform: scale(1.15);
+}
+.sendMessageButton:active {
+    transform: scale(0.85);
 }

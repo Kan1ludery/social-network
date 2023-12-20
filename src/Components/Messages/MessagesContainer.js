@@ -6,6 +6,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import io from "socket.io-client";
 import {baseServerURL} from "../../api/api";
+import {setErrorMessage} from "../../actions/usersActions";
 
 const MessagesContainer = (props) => {
     const [loadedMessageCount, setLoadedMessageCount] = useState(0);
@@ -15,14 +16,17 @@ const MessagesContainer = (props) => {
     const messageContainer = useRef(null); // Создаем useRef для inputContainer
     const messagesPerPage = 25;
     const dispatch = useDispatch()
-    const {user, onlineUsers} = useSelector((state) => state.userReducer)
+    const {user, onlineUsers, errorMessage,} = useSelector((state) => state.userReducer)
     const {_id: userId} = user
     const {
-        chatList, usersRequests, isLoading, activeChat, isSearchModalOpen
+        chatList, usersRequests, isLoading, activeChat, isSearchModalOpen,
     } = useSelector((state) => state.messagesReducer)
     useEffect(() => {
         dispatch(fetchChatList())
         dispatch(fetchFriendRequests());
+        return () => {
+            dispatch(setErrorMessage(null))
+        }
     }, [dispatch]);
     useEffect(() => {
         if (!socketIo && chatList.length > 0 && userId) {
@@ -46,6 +50,10 @@ const MessagesContainer = (props) => {
             socket.on('chatCreated', () => {
                 dispatch(fetchChatList());
             });
+            socket.on('error', (errorData) => {
+                dispatch(setErrorMessage(errorData))
+            });
+
             socket.on('disconnect', () => {
                 setSocketIo(null)
             })
@@ -106,7 +114,7 @@ const MessagesContainer = (props) => {
                       messageContainer={messageContainer} webSocket={socketIo} isLoading={isLoading}
                       handleChatClick={handleChatClick} dispatch={dispatch} isSearchModalOpen={isSearchModalOpen}
                       onlineUsers={onlineUsers} activeTab={activeTab} handleTabClick={handleTabClick}
-                      handleSearchChange={handleSearchChange}/>);
+                      handleSearchChange={handleSearchChange} errorMessage={errorMessage}/>);
 };
 
 export default MessagesContainer;

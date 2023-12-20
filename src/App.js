@@ -1,6 +1,6 @@
 import './App.css';
 import React, {lazy, Suspense} from "react";
-import {BrowserRouter, NavLink} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Loading from "./Utils/Loading/Loading";
 import RoutesWrapper from "./Components/RoutesWrapper/RoutesWrapper";
 

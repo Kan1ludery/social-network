@@ -5,8 +5,8 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     min-width: 600px;
-    width: 60%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0 40px;
 }
 
 .container_info {

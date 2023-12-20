@@ -6,9 +6,7 @@ import Navbutton from "../Navbutton/Navbutton";
 import withAuth from "../../../hoc/withAuth";
 import handleLogout from "../../Auth/Logout/handleLogout";
 
-const Navbar = ({isCompressed, user, isAuth, dispatch, navigate, emailVerified}) => {
-
-    const {username} = user
+const Navbar = ({isCompressed, username, isAuth, dispatch, navigate, emailVerified}) => {
     return (
         <div className={styles.container_navbar}>
             <Navbutton pathTo={`/profile/${username}`} iUrl="/assets/icons/navbar/profile.svg" text="Profile" isCompressed={isCompressed}  />

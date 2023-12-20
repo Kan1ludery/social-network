@@ -3,8 +3,7 @@ import styles from './Profile.module.css'
 import Search from "../../../Utils/SearchComponent/Search";
 import UserImage from "../../../Utils/UserImage/UserImage";
 
-const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName}) => {
-    const {username, email} = user
+const Profile = React.memo(({isCompressed, setIsCompressed, username, email, isAuth, userImageFileName}) => {
     return (<div>
         {isAuth ? <div
             className={!isCompressed ? styles.container_profile : `${styles.container_profile} ${styles.container_profile_compressed}`}>
@@ -17,7 +16,7 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
                     isCompressed={isCompressed}
                     isDisabled={true}
                 />
-                <span className={styles.icon}>
+                    <span className={styles.icon}>
                         <i className={styles.searchIcon}></i>
                     </span>
                 <button
@@ -26,7 +25,8 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
             </div>
             <div className={styles.container_person}>
                 <div>
-                    <UserImage imageName={userImageFileName} alt="profile_person" className={styles.person_image} clickable={true} to={`/profile/${username}`}/>
+                    <UserImage imageName={userImageFileName} alt="profile_person" className={styles.person_image}
+                               clickable={true} to={`/profile/${username}`}/>
                 </div>
 
                 <div
@@ -41,13 +41,12 @@ const Profile = ({isCompressed, setIsCompressed, user, isAuth, userImageFileName
             <div className={styles.unregistered}>
                 <p>Please login or register.</p>
                 <div>
-
                     <a href="/login" className={styles.login}>Login</a>
                     <a href="/register" className={styles.register}>Register</a>
                 </div>
             </div>
         </div>}
     </div>);
-};
+});
 
 export default Profile;

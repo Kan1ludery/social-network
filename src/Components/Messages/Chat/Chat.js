@@ -1,20 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import styles from './Chat.module.css';
 import UserImage from '../../../Utils/UserImage/UserImage';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import OnlineStatusIndicator from '../../../Utils/OnlineStatusIndicator/OnlineStatusIndicator';
-import {deleteUserChat} from "../../../actions/messagesActions";
+import {deleteUserChat, setActiveChat} from "../../../actions/messagesActions";
+import useCurrentUser from "../../../customHooks/useCurrentUser";
+import useEventListener from "../../../customHooks/useElementListener";
 
 const Chat = ({chatData, handleChatClick, isOnline}) => {
+    const dispatch = useDispatch()
     const menuRef = useRef(null);
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch()
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const {currentUserId} = useCurrentUser()
     const {chatId, username, profileImage, isPersonal} = chatData;
     const lastMessage = chatData.lastMessage || {};
     const {senderId, text} = lastMessage;
-    const {_id: currentUserId} = useSelector((state) => state.userReducer.user);
     const isCurrentUser = currentUserId === senderId;
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const clickFunc = (e) => {
         e.stopPropagation();
         setIsMenuOpen(!isMenuOpen);
@@ -25,17 +28,12 @@ const Chat = ({chatData, handleChatClick, isOnline}) => {
             setIsMenuOpen(false);
         }
     };
-
-    useEffect(() => {
-        document.addEventListener('click', closeMenu);
-        return () => {
-            document.removeEventListener('click', closeMenu);
-        };
-    }, []);
+    useEventListener('click', closeMenu);
     const deleteChat = async () => {
         try {
             setLoading(true);
             await dispatch(deleteUserChat(chatId));
+            dispatch(setActiveChat(null))
             setLoading(false);
         } catch (error) {
             console.error("Ошибка при удалении чата:", error);
@@ -50,7 +48,7 @@ const Chat = ({chatData, handleChatClick, isOnline}) => {
                 {!isPersonal && <OnlineStatusIndicator isOnline={isOnline}/>}
             </div>
             <div className={styles.textContainer} title={text}>
-                <div className={styles.username}>{`${!isPersonal ? username : 'Personal chat'}`}</div>
+                <div className={styles.username}>{`${!isPersonal ? username : 'Favourites'}`}</div>
                 {text ? (
                     <div
                         className={styles.lastMessage}>{!isPersonal && `${isCurrentUser ? 'You: ' : `${username}: `} ${text}`}</div>

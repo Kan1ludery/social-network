@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styles from './Messages.module.css';
 import Search from "../../Utils/SearchComponent/Search";
 import ChatInfo from "./Dialogue/ChatInfo";
@@ -9,6 +9,7 @@ import ChatList from "./ChatList/ChatList";
 import Loading from "../../Utils/Loading/Loading";
 import CreateChat from "./СreateChat/CreateChat";
 import {updateSearchModal} from "../../actions/messagesActions";
+import Toast from "../../Utils/Toast/Toast";
 
 const Messages = ({
                       filteredChatList,
@@ -23,14 +24,13 @@ const Messages = ({
                       onlineUsers,
                       handleTabClick,
                       activeTab,
-                      handleSearchChange
+                      handleSearchChange,
+                      errorMessage
                   }) => {
-    const requests = usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''
-
-
+    const requests = useMemo(() => usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : '', [usersRequests.requestsCount]);
     return (<div className={styles.container_messages}>
         <div className={styles.container_messages_left}>
-            {/** Поиск для друзей (в разработке)*/}
+            {/** Поиск для друзей */}
             <div className={styles.container_search}>
                 <Search className={styles.search} placeholder={'Type to search'} id={'search_messages'} type={'input'}
                         onChange={handleSearchChange}/>
@@ -59,16 +59,17 @@ const Messages = ({
         </div>
         {/** Если мы выбрали чат, отобразим его информацию */}
         {activeChat.chatId ? <div className={styles.container_messages_right}>
-            <ChatInfo chatData={activeChat}/>
+            <ChatInfo chatData={activeChat} onlineUsers={onlineUsers}/>
             <div className={styles.inputContainer}>
                 <div className={styles.messageContainer} ref={messageContainer}>
                     {activeChat.messages.map((message) => (<Message key={message.timestamp} message={message}
                                                                     profileImage={activeChat.profileImage}
                                                                     otherUsername={activeChat.username}/>))}
                 </div>
-                <MessagesForm webSocket={webSocket} chatData={activeChat}/>
+                <MessagesForm webSocket={webSocket} chatData={activeChat} dispatch={dispatch}/>
             </div>
         </div> : <div className={styles.noChatMessage}>Pick who you'd like to write to</div>}
+        { errorMessage ? <Toast message={errorMessage} type={'error'} duration={5000} /> : ''}
     </div>);
 };
 

@@ -22,11 +22,19 @@ export const SET_CONFIRMATION_MESSAGE = 'SET_CONFIRMATION_MESSAGE'
 const initialState = {
     // Начальное состояние текущего пользователя
     user: {
+        _id: '',
+        email: '',
+        username: '',
         profile: {
+            description: '',
             profileImage: '',
+            socialLinks: {},
         }
     }, // Начальное состояние 'другого' пользователя
     otherUser: {
+        _id: '',
+        email: '',
+        username: '',
         profile: {
             description: '',
             profileImage: '',
