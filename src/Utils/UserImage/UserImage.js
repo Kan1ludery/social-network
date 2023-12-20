@@ -7,15 +7,29 @@ const UserImage = ({imageName, alt = 'no_image', className, clickable = false, t
     const imageUrl = imageName
         ? `${baseServerURL}/api/uploads/${imageName}`
         : '../assets/img/profile/personImage.svg'; // URL к заглушке
+    const handleImageError = (e) => {
+        e.target.onerror = null; // Отменяем обработчик, чтобы избежать бесконечных циклов ошибок
+        e.target.src = '../assets/img/profile/personImage.svg'; // Загружаем заглушку при ошибке
+    };
     if (clickable) {
         return (
             <NavLink to={to}>
-                <img src={imageUrl} alt={alt} className={className}/>
+                <img
+                    src={imageUrl}
+                    alt={alt}
+                    className={className}
+                    onError={handleImageError}
+                />
             </NavLink>
         );
     }
     return (
-        <img src={imageUrl} alt={alt} className={className}/>
+        <img
+            src={imageUrl}
+            alt={alt}
+            className={className}
+            onError={handleImageError}
+        />
     );
 };
 
