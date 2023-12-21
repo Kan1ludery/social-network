@@ -41,9 +41,11 @@ const Register = () => {
             errors.email = requiredErrorMessage;
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
             errors.email = 'Invalid e-mail address';
-        } else if ((values.email.match(/\./g) || []).length > 1) {
+        } else if ((values.email.split('@')[1].match(/\./g) || []).length > 1) {
             errors.email = 'Email should contain only one domain';
         }
+
+
 
         if (!values.password) {
             errors.password = requiredErrorMessage;
@@ -62,7 +64,9 @@ const Register = () => {
 
     const handleSubmit = async (values, {setSubmitting}) => {
         try {
+            console.log(values)
             const response = await authAPI.register(values);
+            console.log(response)
             const {token} = response;
             localStorage.setItem('token', token);
             dispatch(setAuthStatus(true))
