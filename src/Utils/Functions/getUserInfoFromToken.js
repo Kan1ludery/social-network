@@ -3,7 +3,6 @@ import jwtDecode from 'jwt-decode';
 const getUserInfoFromToken = () => {
     const token = localStorage.getItem('token');
     if (!token) {
-        console.error('JWT токен отсутствует в локальном хранилище.');
         return false;
     }
     try {

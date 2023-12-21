@@ -15,6 +15,7 @@ const FriendsPage = () => {
 
     const {usersRequests, isSearchModalOpen, isLoading} = useSelector((state) => state.messagesReducer)
     const {user, friendsList, friendsCount, onlineUsers} = useSelector((state) => state.userReducer)
+    console.log(usersRequests)
     useEffect(() => {
         const fetchData = async () => {
             try {
