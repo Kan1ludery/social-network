@@ -38,6 +38,25 @@
     width: 32px; /* Ширина метатега */
     height: 32px; /* Высота метатега */
 }
+.relative {
+    position: relative;
+}
+.requestsContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    right: 20px;
+}
+.requests {
+    min-width: 16px;
+    min-height: 16px;
+    background: red;
+    color: yellow;
+    border-radius: 50%;
+    font-size: 14px;
+}
 
 .container_MessagesRequests {
     border-bottom: 1px solid rgba(0, 0, 0, 0.20);
@@ -61,9 +80,11 @@
 }
 
 .button_requests {
+    position: relative;
     cursor: pointer;
     flex: 1;
 }
+
 
 /*RIGHT CONTAINER*/
 .container_messages_right {

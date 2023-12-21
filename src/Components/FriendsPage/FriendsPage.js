@@ -47,7 +47,9 @@ const FriendsPage = () => {
             </button>
             <button onClick={() => handleTabChange('friendRequests')}
                     className={activeTab === 'friendRequests' ? styles.activeTab : styles.inactiveTab}>
-                Friend Requests {usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : ''}
+                Friend Requests {usersRequests.requestsCount > 0 ? <div className={styles.requestsContainer}>
+                <div className={styles.requests}>{usersRequests.requestsCount}</div>
+            </div> : ''}
             </button>
         </div>
         {activeTab === 'friends' ? (<>

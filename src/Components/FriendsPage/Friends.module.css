@@ -29,15 +29,32 @@
     margin-bottom: 20px;
 }
 .activeTab {
+    position: relative;
     background-color: #333;
     color: white;
 }
 
 .inactiveTab {
+    position: relative;
     background-color: #f0f0f0;
     color: #333;
 }
+.requestsContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: -6px;
+    bottom: -6px;
 
+}
+.requests {
+    text-align: center;
+    border-radius: 50%;
+    background: red;
+    min-width: 16px;
+    min-height: 16px;
+    font-size: 12px;
+}
 .tabs button {
     padding: 10px 20px;
     border: 2px solid transparent;

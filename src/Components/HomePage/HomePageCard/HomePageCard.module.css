@@ -4,7 +4,7 @@
     grid-template-columns: 1fr; /* Один столбец */
     grid-template-rows: auto auto 1fr; /* Автоматическая высота для первых двух строк, оставшееся пространство для описания и списка */
     width: 90%;
-    height: 100vh;
+    min-height: 100vh;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
     margin: 0 auto;

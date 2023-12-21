@@ -27,7 +27,7 @@ const Messages = ({
                       handleSearchChange,
                       errorMessage
                   }) => {
-    const requests = useMemo(() => usersRequests.requestsCount > 0 ? `(${usersRequests.requestsCount})` : '', [usersRequests.requestsCount]);
+    const requests = useMemo(() => usersRequests.requestsCount > 0 ? usersRequests.requestsCount : '', [usersRequests.requestsCount]);
     return (<div className={styles.container_messages}>
         <div className={styles.container_messages_left}>
             {/** Поиск для друзей */}
@@ -42,7 +42,15 @@ const Messages = ({
                         onClick={() => handleTabClick('messages')}>Messages
                 </button>
                 <button className={styles.button_requests}
-                        onClick={() => handleTabClick('requests')}>Requests {requests}
+                        onClick={() => handleTabClick('requests')}>
+                    <div className={styles.relative}>
+                    Requests
+                        {requests &&
+                            <div className={styles.requestsContainer}>
+                                <div className={styles.requests}>!</div>
+                            </div>
+                        }
+                    </div>
                 </button>
             </div>
             {/** Переключение вкладки messages/requests */}

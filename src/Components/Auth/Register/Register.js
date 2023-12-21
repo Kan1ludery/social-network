@@ -34,10 +34,15 @@ const Register = () => {
         if (values.username.length > 15) {
             errors.username = 'The username is too long';
         }
+        if (values.username.length < 4) {
+            errors.username = 'The username is too short';
+        }
         if (!values.email) {
             errors.email = requiredErrorMessage;
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
             errors.email = 'Invalid e-mail address';
+        } else if ((values.email.match(/\./g) || []).length > 1) {
+            errors.email = 'Email should contain only one domain';
         }
 
         if (!values.password) {

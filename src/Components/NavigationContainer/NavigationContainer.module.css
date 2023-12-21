@@ -1,7 +1,7 @@
 .container {
     position: sticky;
     top: 0;
-    transition: 0.3s;
+    transition: min-width .3s ease, width .3s ease; /* Добавление transition для width */
     display: flex;
     flex-direction: column;
     height: 100vh;
