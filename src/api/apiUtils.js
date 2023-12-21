@@ -3,8 +3,8 @@ import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import getUserInfoFromToken from "../Utils/Functions/getUserInfoFromToken";
 
-// export const baseServerURL = 'https://yomessage-api.ru'
-const baseServerURL = 'http://localhost:5050'
+export const baseServerURL = 'https://yomessage-api.ru'
+// const baseServerURL = 'http://localhost:5050'
 
 const instance = axios.create({
     baseURL: `${baseServerURL}/api`, // URL сервера API
